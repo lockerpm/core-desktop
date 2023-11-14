@@ -13,7 +13,7 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "ignorePatterns": ["**/core-js/*", "**/node_modules/*"],
+  "ignorePatterns": ["**/web-sh/*", "**/core-js/*", "**/node_modules/*"],
   "rules": {
     "indent": "off",
     "no-console": "off",
@@ -45,6 +45,7 @@
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-this-alias": "off",
-    "@typescript-eslint/no-var-requires": "off"
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-empty-function": "off"
   }
 }

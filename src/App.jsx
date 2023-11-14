@@ -14,7 +14,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'react-phone-number-input/style.css'
 
-import { navigatePage } from './utils/navigate'
+import { navigatePage } from './web-sh/src/utils/navigate'
 
 import common from './utils/common'
 
