@@ -85,34 +85,12 @@ const App = () => {
     dispatch(storeActions.updateCurrentPage(currentPage))
   }, [location])
 
-  useEffect(() => {
-    beforeRedirect()
-  }, [location])
-
   const initJsCore = async () => {
     if (!global.jsCore) {
       global.jsCore = await jsCore()
     }
   }
 
-  const beforeRedirect = async () => {
-    const currentPage = common.getRouterByLocation(location)
-    const accessToken = authServices.access_token()
-    if (accessToken) {
-      if (!currentPage) {
-        global.navigate(global.keys.ADMIN_ERROR)
-        return
-      }
-      if (!currentPage.not_auth) {
-        return
-      }
-    } else {
-      if (!currentPage) {
-        global.navigate(global.keys.ERROR_404)
-        return
-      }
-    }
-  }
   return (
     <Layout>
       {

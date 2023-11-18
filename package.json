@@ -96,6 +96,7 @@
   },
   "main": "public/electron.js",
   "homepage": "./",
+  "productName": "Locker Password Manager",
   "build": {
     "appId": "com.lockerpm_app",
     "files": [

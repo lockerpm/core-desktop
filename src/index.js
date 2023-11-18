@@ -18,11 +18,11 @@ root.render(
   <React.Fragment>
     <Provider store={store}>
       <LocaleProvider>
-        <BrowserRouter>
+        <HashRouter>
           <I18nextProvider i18n={i18n}>
             <App />
           </I18nextProvider>
-        </BrowserRouter>
+        </HashRouter>
       </LocaleProvider>
     </Provider>
   </React.Fragment>
