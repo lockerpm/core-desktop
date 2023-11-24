@@ -24,8 +24,7 @@ import ErrorsLayout from './web-sh/src/layouts/errors'
 import PublicLayout from './web-sh/src/layouts/public'
 
 import systemServices from './services/system'
-import authServices from './services/auth'
-import userServices from './services/user'
+import commonServices from './services/common'
 
 import storeActions from './store/actions'
 
@@ -73,7 +72,10 @@ const App = () => {
   const currentPage = useSelector(state => state.system.currentPage)
 
   useEffect(() => {
-    userServices.check_exist();
+    window.service.getServiceStatus().then((response) => {
+      console.log(0, response);
+    })
+    commonServices.init_server();
     const locale = systemServices.get_language()
     dispatch(storeActions.changeLanguage(locale))
     i18n.changeLanguage(locale)
