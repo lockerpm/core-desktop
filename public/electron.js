@@ -76,24 +76,21 @@ app.whenReady().then(() => {
   ipcMain.handle('setApiToken', (event, token) => {
     return service.setApiToken(token)
   })
-  ipcMain.handle('getDeviceList', () => {
+  ipcMain.handle('getFidoDeviceList', () => {
     return service.getFidoDeviceList()
   })
   ipcMain.handle(
-    'getPasswordless',
-    (event, params ) => {
+    'getPasswordless', (event, params ) => {
       return service.getPasswordless(params)
     }
   )
   ipcMain.handle(
-    'setNewPasswordless',
-    (event, params) => {
+    'setNewPasswordless', (event, params) => {
       return service.setNewPasswordless(params)
     }
   )
   ipcMain.handle(
-    'login',
-    (event, params) => {
+    'login', (event, params) => {
       return service.login(params)
     }
   )
@@ -112,4 +109,21 @@ app.whenReady().then(() => {
   ipcMain.handle('getServiceStatus', () => {
     return service.isReady
   })
+  ipcMain.handle('resetGRPC', () => {
+    return service.resetGRPC()
+  })
+  ipcMain.handle('resetSocket', () => {
+    return service.resetSocket()
+  })
+  ipcMain.handle('deleteBackupPasswordless', (e, id) => {
+    return service.deleteBackupPasswordless(id)
+  })
+  ipcMain.handle('listBackupPasswordless', () => {
+    return service.listBackupPasswordless()
+  })
+  ipcMain.handle(
+    'setBackupPasswordless', ( e, params ) => {
+      return service.setBackupPasswordless(params)
+    }
+  )
 })

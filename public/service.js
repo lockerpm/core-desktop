@@ -25,7 +25,7 @@ class MockStorageService  {
 }
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: process.env.REACT_APP_API_URL,
+  baseApiUrl: `${process.env.REACT_APP_API_URL}/v3`,
   storageService,
   ssl: {
     rootCert: fs.readFileSync(path.resolve(__dirname, '../ca-cert.pem')),

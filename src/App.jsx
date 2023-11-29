@@ -15,6 +15,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'react-phone-number-input/style.css'
 
 import { navigatePage } from './web-sh/src/utils/navigate'
+import { DesktopService } from './components'
 
 import common from './utils/common'
 
@@ -72,12 +73,10 @@ const App = () => {
   const currentPage = useSelector(state => state.system.currentPage)
 
   useEffect(() => {
-    window.service.getServiceStatus().then((response) => {
-      console.log(0, response);
-    })
     commonServices.init_server();
     const locale = systemServices.get_language()
     dispatch(storeActions.changeLanguage(locale))
+    dispatch(storeActions.updateIsDesktop(true))
     i18n.changeLanguage(locale)
     initJsCore()
   }, [])
@@ -95,6 +94,7 @@ const App = () => {
 
   return (
     <Layout>
+      <DesktopService />
       {
         currentPage?.type === 'admin' && userInfo && <AdminLayout
           routers={global.routers.ADMIN_ROUTERS}
