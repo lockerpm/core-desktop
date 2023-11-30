@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('service', {
     ipcRenderer.invoke('setNewPasswordless', params),
   login: (params) =>
     ipcRenderer.invoke('login', params),
+  lock: () => ipcRenderer.invoke('lock'),
   logout: () => ipcRenderer.invoke('logout'),
   getCurrentUser: () => ipcRenderer.invoke('getCurrentUser'),
   confirmPairingClient: (clientId) => ipcRenderer.invoke('confirmPairingClient', clientId),

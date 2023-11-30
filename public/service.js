@@ -2,8 +2,6 @@ const fs = require('fs')
 const path = require('node:path');
 const Store = require('electron-store');
 
-require('dotenv').config()
-
 const { DesktopService } = require('locker-desktop-service')
 
 class MockStorageService  {

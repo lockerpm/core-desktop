@@ -6,46 +6,58 @@ import authServices from '../../services/auth'
 
 import { useSelector } from 'react-redux'
 
+import PairingConfirmModal from './PairingConfirm'
+
 function DesktopService() {
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const [pairingVisible, setPairingVisible] = useState(false)
 
-  useEffect(() => {
-    service.onEvent(async (e, event, data) => {
-      switch (event) {
-        case 'serviceReady':
-          global.store.dispatch(storeActions.updateIsReady(true))
-          break;
-        case 'pairingConfirmation':
-          global.store.dispatch(storeActions.updateApproveCode(data.approveCode));
-          global.store.dispatch(storeActions.updateClientId(data.clientId));
-          global.store.dispatch(storeActions.updateClientType(data.clientType));
-          break;
-        case 'pairingConfirmed':
-          global.store.dispatch(storeActions.updateIsReady(true))
+  service.onEvent(async (e, event, data) => {
+    switch (event) {
+      case 'serviceReady':
+        global.store.dispatch(storeActions.updateIsReady(true))
         break;
-        case 'fidoRequestTouch':
-          global.store.dispatch(storeActions.updateIsTouch(true));
+      case 'pairingConfirmation':
+        global.store.dispatch(storeActions.updateApproveCode(data.approveCode));
+        global.store.dispatch(storeActions.updateClientId(data.clientId));
+        global.store.dispatch(storeActions.updateClientType(data.clientType));
+        setPairingVisible(true)
         break;
-        case 'fidoRequestFingerprint':
-          global.store.dispatch(storeActions.updateIsFingerprint(true));
+      case 'pairingConfirmed':
+        global.store.dispatch(storeActions.updateIsReady(true));
+        setPairingVisible(false)
         break;
-        case 'userLogin':
-          global.store.dispatch(storeActions.updateIsReady(true))
+      case 'fidoRequestTouch':
+        global.store.dispatch(storeActions.updateIsTouch(true));
         break;
-        case 'userLogout':
-          if (data.email === userInfo?.email && userInfo?.sync_all_platforms) {
-            await service.logout();
-            authServices.logout();
-          }
+      case 'fidoRequestFingerprint':
+        global.store.dispatch(storeActions.updateIsFingerprint(true));
         break;
-        default:
-          break;
-      }
-    })
-  }, [userInfo])
+      case 'userLogin':
+        break;
+      case 'userLock':
+        if (data.email === userInfo?.email && userInfo?.sync_all_platforms) {
+          authServices.redirect_login();
+        }
+        break;
+      case 'userLogout':
+        if (data.email === userInfo?.email && userInfo?.sync_all_platforms) {
+          await service.logout();
+          authServices.logout();
+        }
+        break;
+      default:
+        break;
+    }
+  })
 
   return (
-    <></>
+    <>
+      <PairingConfirmModal
+        visible={pairingVisible}
+        onClose={() => setPairingVisible(false)}
+      />
+    </>
   )
 }
 

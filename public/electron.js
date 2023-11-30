@@ -49,6 +49,9 @@ function createWindow() {
   service.on('userLogin', (data) => {
     mainWindow.webContents.send('event', 'userLogin', data)
   })
+  service.on('userLock', (data) => {
+    mainWindow.webContents.send('event', 'userLock', data)
+  })
   service.on('userLogout', (data) => {
     mainWindow.webContents.send('event', 'userLogout', data)
   })
@@ -94,6 +97,9 @@ app.whenReady().then(() => {
       return service.login(params)
     }
   )
+  ipcMain.handle('lock', () => {
+    return service.lock()
+  })
   ipcMain.handle('logout', () => {
     return service.logout()
   })
