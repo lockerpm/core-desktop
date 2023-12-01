@@ -16,6 +16,7 @@ function DesktopService() {
     switch (event) {
       case 'serviceReady':
         global.store.dispatch(storeActions.updateIsReady(true))
+        global.store.dispatch(storeActions.updateIsConnected(true))
         break;
       case 'pairingConfirmation':
         global.store.dispatch(storeActions.updateApproveCode(data.approveCode));
@@ -24,7 +25,6 @@ function DesktopService() {
         setPairingVisible(true)
         break;
       case 'pairingConfirmed':
-        global.store.dispatch(storeActions.updateIsReady(true));
         setPairingVisible(false)
         break;
       case 'fidoRequestTouch':
