@@ -104,7 +104,8 @@
     "files": [
       "build/**/*",
       "node_modules/**/*",
-      "package.json"
+      "package.json",
+      "cert/**/*"
     ],
     "win": {
       "target": "nsis"

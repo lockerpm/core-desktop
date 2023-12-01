@@ -26,7 +26,7 @@ const service = new DesktopService({
   baseApiUrl: `${process.env.REACT_APP_API_URL}/v3`,
   storageService,
   ssl: {
-    rootCert: fs.readFileSync(path.resolve(__dirname, '../ca-cert.pem')),
+    rootCert: fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem')),
   },
   logLevel: 2,
   unsafe: true,
