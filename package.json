@@ -2,49 +2,96 @@
   "name": "lockerpm",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^36.0.1",
-    "@ckeditor/ckeditor5-code-block": "^36.0.1",
-    "@ckeditor/ckeditor5-dev-utils": "^35.0.5",
-    "@ckeditor/ckeditor5-font": "^36.0.1",
-    "@ckeditor/ckeditor5-mention": "^36.0.1",
-    "@ckeditor/ckeditor5-react": "^5.1.0",
-    "@ckeditor/ckeditor5-theme-lark": "^36.0.1",
-    "@craco/craco": "^6.4.5",
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
-    "@lockerpm/design": "^1.0.17",
-    "@mui/icons-material": "^5.10.2",
-    "@mui/material": "^5.10.2",
-    "@reactchartjs/react-chart.js": "^1.0.0-rc.4",
+  "main": ".webpack/main",
+  "productName": "Locker Password Manager",
+  "build": {
+    "appId": "com.lockerpm_app",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "cert/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "publish": "electron-forge publish",
+    "sub:init": "git submodule update --init --recursive",
+    "sub:pull": "git submodule foreach git pull origin dev",
+    "sub:update": "git submodule update --remote"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
+    "@electron-forge/plugin-webpack": "^6.4.2",
     "@types/node-forge": "^1.3.3",
     "@types/papaparse": "^5.3.7",
+    "@types/react": "^18.2.35",
+    "@types/react-dom": "^18.2.14",
     "@types/tldjs": "^2.3.1",
     "@types/zxcvbn": "^4.4.1",
-    "apexcharts": "^3.37.2",
-    "axios": "^0.27.2",
-    "babel-plugin-import": "^1.13.5",
-    "big-integer": "^1.6.51",
-    "browser-hrtime": "^1.1.8",
-    "chart.js": "^4.0.1",
-    "chartjs-plugin-labels": "^1.1.0",
-    "concurrently": "^8.2.2",
-    "craco-less": "^2.0.0",
-    "credit-card-type": "^10.0.0",
-    "cross-env": "^7.0.3",
-    "draft-js": "^0.11.7",
-    "electron-is-dev": "^2.0.0",
-    "electron-store": "^8.1.0",
-    "env-cmd": "^10.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "css-loader": "^6.0.0",
+    "dotenv-webpack": "^8.0.1",
+    "electron": "^27.1.0",
+    "electron-builder": "^24.6.4",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "node-loader": "^2.0.0",
+    "style-loader": "^3.0.0",
+    "svg-url-loader": "^8.0.0",
+    "ts-loader": "^9.2.2",
+    "ts-node": "^10.0.0",
+    "typescript": "~4.5.4",
+    "url-loader": "^4.1.1"
+  },
+  "dependencies": {
+    "@lockerpm/design": "^1.0.17",
+    "@reactchartjs/react-chart.js": "^1.0.0-rc.4",
+    "apexcharts": "^3.37.2",
+    "axios": "^0.27.2",
+    "babel-loader": "^9.1.3",
+    "babel-plugin-import": "^1.13.5",
+    "big-integer": "^1.6.51",
+    "browser-hrtime": "^1.1.8",
+    "chart.js": "^4.0.1",
+    "chartjs-plugin-labels": "^1.1.0",
+    "concurrently": "^8.2.2",
+    "credit-card-type": "^10.0.0",
+    "dotenv": "^16.3.1",
+    "draft-js": "^0.11.7",
+    "electron-is-dev": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
     "extract-domain": "^4.1.5",
     "firebase": "^9.15.0",
-    "google-map-react": "^2.2.0",
     "highcharts": "^10.3.3",
     "highcharts-react-official": "^3.2.0",
     "i18next": "^22.5.0",
@@ -89,54 +136,10 @@
     "tailwindcss": "^3.3.2",
     "tldjs": "^2.3.1",
     "totp-generator": "^0.0.14",
-    "typescript": "^5.1.6",
     "url": "^0.11.1",
     "wait-on": "^7.2.0",
     "web-vitals": "^2.1.4",
     "yarn": "^1.22.19",
     "zxcvbn": "^4.4.2"
-  },
-  "main": "public/electron.js",
-  "homepage": "./",
-  "productName": "Locker Password Manager",
-  "build": {
-    "appId": "com.lockerpm_app",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "package.json",
-      "cert/**/*"
-    ],
-    "win": {
-      "target": "nsis"
-    }
-  },
-  "scripts": {
-    "start": "concurrently \"SET BROWSER=none && set HTTPS=true&&env-cmd -e development craco start\" \"wait-on https://demo.locker.io:3000 && env-cmd -e development electron .\"",
-    "build:dev": "env-cmd -e development craco build",
-    "build:stg": "env-cmd -e staging craco build",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "sub:init": "git submodule update --init --recursive",
-    "sub:pull": "git submodule foreach git pull origin dev",
-    "sub:update": "git submodule update --remote",
-    "release": "env-cmd -e development craco build && env-cmd -e development electron-builder --publish=always"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "electron": "^27.1.0",
-    "electron-builder": "^24.6.4"
   }
 }
