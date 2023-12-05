@@ -101,6 +101,9 @@
   "productName": "Locker Password Manager",
   "build": {
     "appId": "com.lockerpm_app",
+    "extraResources": [
+      ".env-cmdrc"
+    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
