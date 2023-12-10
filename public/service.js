@@ -23,7 +23,7 @@ class MockStorageService  {
 }
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: `${process.env.REACT_APP_API_URL}/v3`,
+  baseApiUrl: `https://api-core.locker.io/v3`,
   storageService,
   ssl: {
     rootCert: fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem')),
