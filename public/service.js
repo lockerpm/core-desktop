@@ -21,12 +21,21 @@ class MockStorageService  {
     return Promise.resolve()
   }
 }
+
+const rootCert = (() => {
+  if (process.env.NODE_ENV === 'development') {
+    return fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem'))
+  } else {
+    return fs.readFileSync(path.resolve(process.resourcesPath, 'cert', 'ca-cert.pem'))
+  }
+})()
+
 const storageService = new MockStorageService()
 const service = new DesktopService({
   baseApiUrl: `https://api-core.locker.io/v3`,
   storageService,
   ssl: {
-    rootCert: fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem')),
+    rootCert,
   },
   logLevel: 2,
   unsafe: true,

@@ -1,0 +1,91 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Error: Full path not provided."
+    exit 1
+fi
+
+full_path="$1"
+base_path=$(dirname "$full_path")
+output_file="$base_path/log.txt"
+completion_file="$base_path/done.txt"
+
+if [ -e "$output_file" ]; then
+    rm "$output_file"
+fi
+
+start_code="set endFile to \"$completion_file\""
+script_code='
+-- Bash script as a string
+set bashScript to "if ! command -v brew &> /dev/null; then
+    echo \"Homebrew is not installed. Installing Homebrew...\"
+    /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
+else
+    echo \"Homebrew is already installed.\"
+fi" & " && brew install libfido2" & " && touch " & endFile & " && exit"
+
+tell application "Terminal"
+	activate
+	set shell to do script bashScript
+end tell
+
+-- Check for the existence of the completion file
+repeat while not (do shell script "[ -e \"" & endFile & "\" ] && echo 1 || echo 0") is equal to "1"
+	delay 1
+end repeat
+return "Done"'
+real_script="$start_code$script_code"
+
+# Full path to the pkg
+echo "Run pkg from: $1" > "$output_file"
+
+# Full path to the installation destination. For example: /Applications
+echo "Installation destination: $2" >> "$output_file"
+
+osascript -e "$real_script" &
+wait
+
+binary_path="/Applications/Locker Password Manager.app/Contents/Resources/locker-service"
+
+# List of ports
+ports=(14401 14100 15601 14402 16301 14504 14505 14403)
+
+# Flag to track if any port responded
+responded=false
+
+# Iterate over each port
+for port in "${ports[@]}"; do
+    # Send a GET request to localhost:port/ping-locker-service
+    response=$(curl -s "http://localhost:$port/ping-locker-service")
+
+    # Check if the response contains "pong" (adjust as needed)
+    if [[ "$response" == *"pong"* ]]; then
+        responded=true
+        break  # Exit the loop if any port responds
+    fi
+done
+
+# Check if any port responded
+if [ "$responded" = true ]; then
+    echo "Service is currently running" >> "$output_file"
+    sudo "$binary_path" -service=stop
+    sudo "$binary_path" -service=uninstall
+    echo "Current service is uninstalled" >> "$output_file"
+else
+    echo "Service is not running" >> "$output_file"
+fi
+
+sudo "$binary_path" -service=install
+sudo "$binary_path" -service=start
+echo "Service is started" >> "$output_file"
+
+echo "end" >> "$output_file"
+
+# rm $completion_file
+if [ -e "$completion_file" ]; then
+    rm "$completion_file"
+fi
+
+exit 0
+
+# sudo pkgbuild --identifier com.cystack.test --nopayload --script Scripts com.cystack.test.pkg
