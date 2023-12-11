@@ -31,11 +31,9 @@
     "concurrently": "^8.2.2",
     "craco-less": "^2.0.0",
     "credit-card-type": "^10.0.0",
-    "cross-env": "^7.0.3",
     "draft-js": "^0.11.7",
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
-    "env-cmd": "^10.1.0",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -101,9 +99,6 @@
   "productName": "Locker Password Manager",
   "build": {
     "appId": "com.lockerpm_app",
-    "extraResources": [
-      ".env-cmdrc"
-    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
@@ -115,16 +110,13 @@
     }
   },
   "scripts": {
-    "start": "concurrently \"SET BROWSER=none && set HTTPS=true&&env-cmd -e development craco start\" \"wait-on https://demo.locker.io:3000 && env-cmd -e development electron .\"",
-    "build:dev": "env-cmd -e development craco build",
-    "build:stg": "env-cmd -e staging craco build",
+    "start": "concurrently \"SET BROWSER=none && set HTTPS=true&&craco start\" \"wait-on https://demo.locker.io:3000 && electron .\"",
     "build": "craco build",
-    "test": "craco test",
     "eject": "react-scripts eject",
+    "release": "craco build && electron-builder --publish=always",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin dev",
-    "sub:update": "git submodule update --remote",
-    "release": "env-cmd -e development craco build && env-cmd -e development electron-builder --publish=always"
+    "sub:update": "git submodule update --remote"
   },
   "browserslist": {
     "production": [
@@ -139,6 +131,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv": "^16.3.1",
     "electron": "^27.1.0",
     "electron-builder": "^24.6.4"
   }
