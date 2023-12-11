@@ -1,4 +1,24 @@
 Run pkg from: /Users/duchm/Desktop/duc/cystack/locker/desktop-selfhosted/TestPackage/com.cystack.test.pkg
+set endFile to "/Users/duchm/Desktop/duc/cystack/locker/desktop-selfhosted/TestPackage/done.txt"
+-- Bash script as a string
+set bashScript to "if command -v brew &> /dev/null; then
+    echo \"Homebrew is not installed. Installing Homebrew...\"
+    (echo; echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"') >> ~/.zprofile
+    eval \"$(/opt/homebrew/bin/brew shellenv)\"
+else
+    echo \"Homebrew is already installed.\"
+fi" & " && brew install libfido2" & " && touch " & endFile & " && exit"
+
+tell application "Terminal"
+	activate
+	set shell to do script bashScript
+end tell
+
+-- Check for the existence of the completion file
+repeat while not (do shell script "[ -e \"" & endFile & "\" ] && echo 1 || echo 0") is equal to "1"
+	delay 1
+end repeat
+return "Done"
 Installation destination: /
 Service is currently running
 Current service is uninstalled
