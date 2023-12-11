@@ -1,10 +1,11 @@
 const fs = require('fs')
 const path = require('node:path');
 const Store = require('electron-store');
+const isDev = require('electron-is-dev');
 
 const { DesktopService } = require('locker-desktop-service')
 
-class MockStorageService  {
+class MockStorageService {
   storage
   constructor() {
     this.storage = new Store()
@@ -23,7 +24,7 @@ class MockStorageService  {
 }
 
 const rootCert = (() => {
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     return fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem'))
   } else {
     return fs.readFileSync(path.resolve(process.resourcesPath, 'cert', 'ca-cert.pem'))
@@ -35,10 +36,14 @@ const service = new DesktopService({
   baseApiUrl: `https://api-core.locker.io/v3`,
   storageService,
   ssl: {
-    rootCert,
+    rootCert: rootCert,
   },
   logLevel: 2,
   unsafe: true,
+  apiHeaders: {
+    'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
+    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET
+  }
 })
 
 module.exports = {
