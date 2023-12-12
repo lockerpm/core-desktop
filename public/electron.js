@@ -1,4 +1,4 @@
-const { app , BrowserWindow, ipcMain  } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const isDev = require('electron-is-dev');
 const url = require('url');
@@ -7,7 +7,7 @@ const { service } = require(path.join(__dirname, './service.js'));
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
-let mainWindow ;
+let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -56,7 +56,7 @@ function createWindow() {
     mainWindow.webContents.send('event', 'userLogout', data)
   })
 
-  mainWindow.on('close', function() {
+  mainWindow.on('close', function () {
     mainWindow = null;
   })
 }
@@ -83,7 +83,7 @@ app.whenReady().then(() => {
     return service.getFidoDeviceList()
   })
   ipcMain.handle(
-    'getPasswordless', (event, params ) => {
+    'getPasswordless', (event, params) => {
       return service.getPasswordless(params)
     }
   )
@@ -128,7 +128,7 @@ app.whenReady().then(() => {
     return service.listBackupPasswordless()
   })
   ipcMain.handle(
-    'setBackupPasswordless', ( e, params ) => {
+    'setBackupPasswordless', (e, params) => {
       return service.setBackupPasswordless(params)
     }
   )

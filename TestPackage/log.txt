@@ -1,9 +1,0 @@
-/private/tmp/PKInstallSandbox.VdW4Ur/Scripts/com.cystack.test.AQoSFT
-Run pkg from: /Users/duchm/Desktop/duc/cystack/locker/desktop-selfhosted/TestPackage/com.cystack.test.pkg
-Installation destination: /
-CA's self-signed certificate
-Server's signed certificate
-Service is currently running
-Current service is uninstalled
-Service is started
-end

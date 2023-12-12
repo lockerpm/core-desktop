@@ -3,6 +3,8 @@ const path = require('node:path');
 const Store = require('electron-store');
 const isDev = require('electron-is-dev');
 
+require('dotenv').config()
+
 const { DesktopService } = require('locker-desktop-service')
 
 class MockStorageService {
@@ -33,16 +35,16 @@ const rootCert = (() => {
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: `https://api-core.locker.io/v3`,
+  baseApiUrl: process.env.REACT_APP_API_URL + '/v3',
   storageService,
   ssl: {
     rootCert: rootCert,
   },
-  logLevel: 2,
+  logLevel: process.env.SHOW_LOG ? 2 : 1,
   unsafe: true,
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
-    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET
+    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET,
   }
 })
 
