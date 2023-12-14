@@ -52,17 +52,59 @@
       "build/**/*",
       "node_modules/**/*",
       "package.json",
-      "cert/**/*"
+      "installer/**/*",
+      "service/**/*"
     ],
     "win": {
       "target": "nsis"
-    }
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": false,
+      "include": "service/installer.nsh",
+      "uninstallDisplayName": "locker-desktop-uninstaller"
+    },
+    "extraFiles": [
+      {
+        "from": "service/locker_service.exe",
+        "to": "locker_service.exe"
+      },
+      {
+        "from": "service/cbor.dll",
+        "to": "cbor.dll"
+      },
+      {
+        "from": "service/crypto-50.dll",
+        "to": "crypto-50.dll"
+      },
+      {
+        "from": "service/fido2.dll",
+        "to": "fido2.dll"
+      },
+      {
+        "from": "service/zlib1.dll",
+        "to": "zlib1.dll"
+      },
+      {
+        "from": "service/cert-gen-and-service-install.ps1",
+        "to": "cert-gen-and-service-install.ps1"
+      },
+      {
+        "from": "service/cert-gen-and-service-uninstall.ps1",
+        "to": "cert-gen-and-service-uninstall.ps1"
+      }
+    ]
   },
   "scripts": {
     "start": "concurrently \"SET BROWSER=none && set HTTPS=true&&craco start\" \"wait-on https://demo.locker.io:3000 && electron .\"",
     "build": "craco build",
     "eject": "react-scripts eject",
     "release": "craco build && electron-builder --publish=always",
+    "release:win-64": "craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin dev",
     "sub:update": "git submodule update --remote"
