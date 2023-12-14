@@ -3,7 +3,7 @@ const path = require('node:path');
 const isDev = require('electron-is-dev');
 const url = require('url');
 
-const { service } = require(path.join(__dirname, './service.js'));
+const { service } = require('./service.js');
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 

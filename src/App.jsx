@@ -12,7 +12,6 @@ import './assets/css/index.scss'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import 'react-phone-number-input/style.css'
 
 import { navigatePage } from './web-sh/src/utils/navigate'
 import { DesktopService } from './components'

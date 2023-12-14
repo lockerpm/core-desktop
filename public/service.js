@@ -3,8 +3,6 @@ const path = require('node:path');
 const Store = require('electron-store');
 const isDev = require('electron-is-dev');
 
-require('dotenv').config()
-
 const { DesktopService } = require('locker-desktop-service')
 
 class MockStorageService {
