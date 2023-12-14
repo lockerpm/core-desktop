@@ -1,0 +1,15 @@
+Hướng dẫn cài app Locker cho MacOS
+- Lưu ý:
+	- App Locker Desktop bao gồm 1 app desktop + 1 service chạy ngầm để thực hiện các tính năng passwordless và đồng bộ phiên đăng nhập trên các nền tảng (Desktop + Web + Extension)
+	- Để đơn giản quá trình cài đặt, bên CyStack build ra pkg thay vì dmg để cài cả app desktop và background service vào máy user
+	- Do gặp vấn đề với Apple chưa công chứng được app nên khi mở file .pkg bình sẽ sẽ có thông báo "Apple cannot check it for malicious software"
+	- Locker cần có thư viện libfido2 cài sẵn trong máy users để có thể sử dụng các tính năng passwordless. Trong quá trình cài đặt, Terminal sẽ mở lên và cài Homebrew kèm libfido2
+- Các bước cài đặt:
+	- Bấm chuột phải vào file .pkg, giữ nút command và bấm vào Open, sau đó bấm Open khi xuất hiện thông báo
+	- Bấm continue đến bước Installation
+	- Đến khi quá trình install sắp hoàn thành, chương trình sẽ yêu cầu cho phép mở Terminal, chọn Allow
+	- Terminal sẽ mở lên và tiến hành cài Homebrew và libfido2 nếu chưa cài đặt, nhập password của máy và bấm Enter khi được yêu cầu (nếu cần). Quy trình này lần đầu tốn khoảng 7p
+	- Sau khi cài đặt trên Terminal xong, chương trình yêu cầu người dùng cho phép truy cập vào file để xoá file log tạo ra trong quá trình cài đặt, chọn Allow
+	- Cài đặt thành công, tắt Terminal và sử dụng Locker
+- Lưu ý khi sử dụng:
+	- Sau khi đã thực hiện pairing giữa web và app desktop thì có thể dùng các tính năng fido trực tiếp trên web mà không cần mở app desktop

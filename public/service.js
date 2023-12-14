@@ -33,17 +33,13 @@ const rootCert = (() => {
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: process.env.REACT_APP_API_URL + '/v3',
+  baseApiUrl: 'https://locker.vincss.net:8443' + '/v3',
   storageService,
   ssl: {
     rootCert: rootCert,
   },
-  logLevel: process.env.SHOW_LOG ? 2 : 1,
-  unsafe: true,
-  apiHeaders: {
-    'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
-    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET,
-  }
+  logLevel: 1,
+  unsafe: true
 })
 
 module.exports = {
