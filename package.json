@@ -52,11 +52,11 @@
       "build/**/*",
       "node_modules/**/*",
       "package.json",
+      "installer/**/*",
       "service/**/*"
     ],
     "win": {
-      "target": "nsis",
-      "icon": "icon-logo.svg"
+      "target": "nsis"
     },
     "nsis": {
       "oneClick": false,
@@ -66,8 +66,6 @@
       "deleteAppDataOnUninstall": true,
       "runAfterFinish": false,
       "include": "service/installer.nsh",
-      "installerIcon": "icon-logo.svg",
-      "uninstallerIcon": "icon-logo.svg",
       "uninstallDisplayName": "locker-desktop-uninstaller"
     },
     "extraFiles": [
@@ -106,6 +104,7 @@
     "build": "craco build",
     "eject": "react-scripts eject",
     "release": "craco build && electron-builder --publish=always",
+    "release:win-64": "craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin dev",
     "sub:update": "git submodule update --remote"

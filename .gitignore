@@ -27,3 +27,7 @@ yarn-error.log*
 
 *.pem
 *.cert
+*.dll
+*.nsh
+*.exe
+*.ps1
