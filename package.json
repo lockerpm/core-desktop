@@ -45,9 +45,9 @@
   },
   "main": "public/electron.js",
   "homepage": "./",
-  "productName": "Locker Password Manager",
+  "productName": "VinCss Locker",
   "build": {
-    "appId": "com.lockerpm_app",
+    "appId": "com.vincsslocker_app",
     "files": [
       "build/**/*",
       "node_modules/**/*",
