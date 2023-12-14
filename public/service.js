@@ -26,7 +26,7 @@ class MockStorageService {
 }
 
 const rootCert = (() => {
-  return fs.readFileSync(path.join(__dirname, '../cert/ca-cert.pem'))
+  return fs.readFileSync(path.join(__dirname, '../service/cert/ca-cert.pem'))
 })()
 
 const storageService = new MockStorageService()
