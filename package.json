@@ -64,7 +64,7 @@
     "eject": "react-scripts eject",
     "release": "craco build && electron-builder --publish=always",
     "sub:init": "git submodule update --init --recursive",
-    "sub:pull": "git submodule foreach git pull origin dev",
+    "sub:pull": "git submodule foreach git pull origin vincss",
     "sub:update": "git submodule update --remote"
   },
   "browserslist": {
