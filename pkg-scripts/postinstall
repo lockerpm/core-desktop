@@ -9,11 +9,15 @@ full_path="$1"
 base_path=$(dirname "$full_path")
 output_file="$base_path/log.txt"
 completion_file="$base_path/done.txt"
+quoted_completion_file="${completion_file// /\\\\ }"
 
 if [ -e "$output_file" ]; then
     rm "$output_file"
 fi
 
+script_code_0="set endFileQuoted to \"$quoted_completion_file\""
+script_code_01='
+'
 script_code_1="set endFile to \"$completion_file\""
 script_code_2='
 -- Bash script as a string
@@ -26,7 +30,7 @@ script_code_4='
     eval \"$(/opt/homebrew/bin/brew shellenv)\"
 else
     echo \"Homebrew is already installed.\"
-fi" & " && brew list libfido2 || brew install libfido2" & " && touch " & endFile & " && exit"
+fi" & " && brew list libfido2 || brew install libfido2" & " && echo \"done\" > " & endFileQuoted & " && echo \"\\nlibfido2 is installed, you can close this window\" && exit"
 
 tell application "Terminal"
 	activate
@@ -38,10 +42,11 @@ repeat while not (do shell script "[ -e \"" & endFile & "\" ] && echo 1 || echo 
 	delay 1
 end repeat
 return "Done"'
-real_script="$script_code_1$script_code_2$script_code_3$script_code_4"
+real_script="$script_code_0$script_code_01$script_code_1$script_code_2$script_code_3$script_code_4"
 
 # Current folder
 pwd > "$output_file"
+echo "Installer version 0.0.2" >> "$output_file"
 
 # Full path to the pkg
 echo "Run pkg from: $1" >> "$output_file"
@@ -51,6 +56,8 @@ echo "Installation destination: $2" >> "$output_file"
 
 osascript -e "$real_script" &
 wait
+
+echo "libfido2 is installed" >> "$output_file"
 
 app_resources_path="/Applications/Locker Password Manager.app/Contents/Resources"
 binary_path="$app_resources_path/locker-service"
