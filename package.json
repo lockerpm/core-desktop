@@ -1,5 +1,5 @@
 {
-  "name": "lockerpm",
+  "name": "vincsslocker",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -15,7 +15,7 @@
     "electron-store": "^8.1.0",
     "extract-domain": "^4.1.5",
     "i18next": "^22.5.0",
-    "locker-desktop-service": "^0.1.3",
+    "locker-desktop-service": "^0.1.5",
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
     "moment": "^2.29.4",
@@ -48,6 +48,9 @@
   "productName": "VinCss Locker",
   "build": {
     "appId": "com.vincsslocker_app",
+    "extraResources": [
+      "service/cert"
+    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
@@ -65,8 +68,7 @@
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true,
       "runAfterFinish": false,
-      "include": "service/installer.nsh",
-      "uninstallDisplayName": "locker-desktop-uninstaller"
+      "include": "service/installer.nsh"
     },
     "extraFiles": [
       {
