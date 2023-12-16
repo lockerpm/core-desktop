@@ -26,8 +26,13 @@ class MockStorageService {
 }
 
 const rootCert = (() => {
-  return fs.readFileSync(path.join(__dirname, '../service/cert/ca-cert.pem'))
+  if (isDev) {
+    return fs.readFileSync(path.join(__dirname, '../service/cert/ca-cert.pem'))
+  } else {
+    return fs.readFileSync(path.resolve(process.resourcesPath, '../cert/ca-cert.pem'))
+  }
 })()
+
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
@@ -36,7 +41,7 @@ const service = new DesktopService({
   ssl: {
     rootCert: rootCert,
   },
-  logLevel: 1,
+  logLevel: 2,
   unsafe: true,
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
