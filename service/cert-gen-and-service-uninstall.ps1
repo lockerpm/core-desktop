@@ -12,8 +12,8 @@ for ($i=0; $i -lt $GatewayPorts.Length; $i++) {
     }
     if ($res.StatusCode -eq "200") {
 	$WorkingPort = $GatewayPorts[$i]
-	.\locker_service.exe -service=stop
-	.\locker_service.exe -service=uninstall   
+	.\desktop-service.exe -service=stop
+	.\desktop-service.exe -service=uninstall   
     }
 }
 

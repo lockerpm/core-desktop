@@ -2,8 +2,8 @@
 Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -match 'LockerServiceCA' } | Remove-Item
 Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.Subject -match 'LockerServiceServer' } | Remove-Item
 
-$ca = New-SelfSignedCertificate -Subject 'CN=LockerServiceCA,O=LockerServiceCA,OU=LockerServiceCA' -CertStoreLocation cert:\LocalMachine\My -KeyExportPolicy Exportable  -KeyUsage CertSign,CRLSign,DigitalSignature -KeyLength 4096 -KeyUsageProperty All -KeyAlgorithm 'RSA'  -HashAlgorithm 'SHA256'  -Provider 'Microsoft Enhanced RSA and AES Cryptographic Provider' -FriendlyName locker_service_ca
-$server = New-SelfSignedCertificate -Subject 'CN=LockerServiceServer,O=LockerServiceServer,OU=LockerServiceServer' -CertStoreLocation cert:\LocalMachine\My -TextExtension @("2.5.29.17={text}IPAddress=0.0.0.0&DNS=*.tls&DNS=localhost") -Signer $ca -KeyUsage KeyEncipherment,DigitalSignature -KeyAlgorithm RSA -KeyLength 4096 -HashAlgorithm "SHA256" -KeyExportPolicy Exportable -FriendlyName locker_service_server
+$ca = New-SelfSignedCertificate -Subject 'CN=LockerServiceCA,O=LockerServiceCA,OU=LockerServiceCA' -CertStoreLocation cert:\LocalMachine\My -KeyExportPolicy Exportable  -KeyUsage CertSign,CRLSign,DigitalSignature -KeyLength 4096 -KeyUsageProperty All -KeyAlgorithm 'RSA'  -HashAlgorithm 'SHA256'  -Provider 'Microsoft Enhanced RSA and AES Cryptographic Provider' -FriendlyName desktop-service_ca
+$server = New-SelfSignedCertificate -Subject 'CN=LockerServiceServer,O=LockerServiceServer,OU=LockerServiceServer' -CertStoreLocation cert:\LocalMachine\My -TextExtension @("2.5.29.17={text}IPAddress=0.0.0.0&DNS=*.tls&DNS=localhost") -Signer $ca -KeyUsage KeyEncipherment,DigitalSignature -KeyAlgorithm RSA -KeyLength 4096 -HashAlgorithm "SHA256" -KeyExportPolicy Exportable -FriendlyName desktop-service_server
 $current = Get-Location
 $certDir = "$current\cert"
 if (!(Test-Path $certDir)) {
@@ -55,14 +55,14 @@ for ($i=0; $i -lt $GatewayPorts.Length; $i++) {
     }
     if ($res.StatusCode -eq "200") {
 	$WorkingPort = $GatewayPorts[$i]
-	.\locker_service.exe -service=stop
-	.\locker_service.exe -service=uninstall
+	.\desktop-service.exe -service=stop
+	.\desktop-service.exe -service=uninstall
 	break	    
     }
 }
 
-.\locker_service.exe -service=install
-.\locker_service.exe -service=start
+.\desktop-service.exe -service=install
+.\desktop-service.exe -service=start
 
 if ($WorkingPort -eq $null) {
     $WorkingPort = "14401"
