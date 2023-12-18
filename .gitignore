@@ -12,6 +12,7 @@
 # production
 /build
 /dist
+/service
 
 # misc
 .DS_Store
@@ -27,6 +28,10 @@ yarn-error.log*
 
 *.pem
 *.cert
+*.dll
+*.nsh
+*.exe
+*.ps1
 locker-service
 *.dmg
 *.pkg
