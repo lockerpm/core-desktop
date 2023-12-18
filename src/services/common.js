@@ -4,7 +4,8 @@ async function reset_service() {
   await service.resetGRPC();
 }
 
+common.reset_service = reset_service;
+
 export default {
-  ...common,
-  reset_service
+  ...common
 };
