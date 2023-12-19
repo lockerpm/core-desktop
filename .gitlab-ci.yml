@@ -1,0 +1,18 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
+stages:
+  - build
+
+build_windows_x64:
+  stage: build
+  script:
+    - pip install requests boto3
+    - python deploy.py
+  tags:
+    - win01
+  only:
+    - dev
+    - tags
+

@@ -22,5 +22,6 @@ contextBridge.exposeInMainWorld('service', {
   listBackupPasswordless: () => ipcRenderer.invoke('listBackupPasswordless'),
   setBackupPasswordless: (params) => ipcRenderer.invoke('setBackupPasswordless', params),
 
+  openShellUrl: url => ipcRenderer.invoke('openShellUrl', url),
   onEvent: (callback) => ipcRenderer.on('event', callback),
 })

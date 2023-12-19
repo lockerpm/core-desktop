@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('node:path');
 const isDev = require('electron-is-dev');
 const url = require('url');
@@ -132,4 +132,7 @@ app.whenReady().then(() => {
       return service.setBackupPasswordless(params)
     }
   )
+  ipcMain.handle('openShellUrl', (__, url) => {
+    shell.openExternal(url)
+  })
 })
