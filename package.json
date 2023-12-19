@@ -15,7 +15,7 @@
     "electron-store": "^8.1.0",
     "extract-domain": "^4.1.5",
     "i18next": "^22.5.0",
-    "locker-desktop-service": "^0.1.6",
+    "locker-desktop-service": "0.1.5",
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
     "moment": "^2.29.4",
@@ -72,8 +72,8 @@
     },
     "extraFiles": [
       {
-        "from": "service/desktop-service.exe",
-        "to": "desktop-service.exe"
+        "from": "service/locker_service.exe",
+        "to": "locker_service.exe"
       },
       {
         "from": "service/cbor.dll",
