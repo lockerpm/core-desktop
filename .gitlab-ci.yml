@@ -5,14 +5,14 @@ variables:
 stages:
   - build
 
-build_windows_x64:
+build_mac_x64:
   stage: build
   script:
     - pip install requests boto3
     - python deploy.py
   tags:
-    - win01
+    - mac-intel
   only:
-    - dev
+    - duchm-vincss
     - tags
 
