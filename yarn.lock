@@ -7928,10 +7928,10 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-locker-desktop-service@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/locker-desktop-service/-/locker-desktop-service-0.1.5.tgz#ac716af9a1658ddf41493a587125fdc005dc5d3c"
-  integrity sha512-iYLOD/wcMMVBU1fmzYL19LdOzbpvRn0IZfq/BYFly3c6OrvlnzkCkuMP8vEsKyFFRkoipnRxWagUOtN4neLJRw==
+locker-desktop-service@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/locker-desktop-service/-/locker-desktop-service-0.1.7.tgz#3590cb854bdda840e8a066da444dcb0a3ecdb2c2"
+  integrity sha512-VCfURY/FszrGgY+waQmsXFX9CdEDKDX4ZFXZN2qwgvO7KUuW9c2fwaUsEN0Cqb4v8mzJmK1HfPjSJ8J6vRehLw==
   dependencies:
     "@grpc/grpc-js" "^1.9.7"
     axios "^1.5.1"

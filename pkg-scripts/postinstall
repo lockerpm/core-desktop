@@ -8,57 +8,20 @@ fi
 full_path="$1"
 base_path=$(dirname "$full_path")
 output_file="$base_path/log.txt"
-completion_file="$base_path/done.txt"
-quoted_completion_file="${completion_file// /\\\\ }"
 
 if [ -e "$output_file" ]; then
     rm "$output_file"
 fi
 
-script_code_0="set endFileQuoted to \"$quoted_completion_file\""
-script_code_01='
-'
-script_code_1="set endFile to \"$completion_file\""
-script_code_2='
--- Bash script as a string
-set bashScript to "if ! command -v brew &> /dev/null; then
-    echo \"Homebrew is not installed. Installing Homebrew...\"
-    /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
-    '
-script_code_3="(echo; echo 'eval \\\"\$(/opt/homebrew/bin/brew shellenv)\\\"') >> ~/.zprofile"
-script_code_4='
-    eval \"$(/opt/homebrew/bin/brew shellenv)\"
-else
-    echo \"Homebrew is already installed.\"
-fi" & " && brew list libfido2 || brew install libfido2" & " && echo \"done\" > " & endFileQuoted & " && echo \"\\nlibfido2 is installed, you can close this window\" && exit"
-
-tell application "Terminal"
-	activate
-	set shell to do script bashScript
-end tell
-
--- Check for the existence of the completion file
-repeat while not (do shell script "[ -e \"" & endFile & "\" ] && echo 1 || echo 0") is equal to "1"
-	delay 1
-end repeat
-return "Done"'
-real_script="$script_code_0$script_code_01$script_code_1$script_code_2$script_code_3$script_code_4"
-echo "$real_script"
-
 # Current folder
 pwd > "$output_file"
-echo "Installer version 0.0.2" >> "$output_file"
+echo "Installer version 0.0.4" >> "$output_file"
 
 # Full path to the pkg
 echo "Run pkg from: $1" >> "$output_file"
 
 # Full path to the installation destination. For example: /Applications
 echo "Installation destination: $2" >> "$output_file"
-
-osascript -e "$real_script" &
-wait
-
-echo "libfido2 is installed" >> "$output_file"
 
 app_resources_path="/Applications/VinCSS Locker.app/Contents/Resources"
 binary_path="$app_resources_path/locker-service"
@@ -67,9 +30,15 @@ cert_path="$app_resources_path/cert"
 ### CREATE CERTS
 
 cd "$cert_path"
-rm *.pem
-rm *.srl
-rm *.cnf
+
+if command -v openssl &> /dev/null; then
+    echo "OpenSSL is installed." >> "$output_file"
+    rm *.pem
+    rm *.srl
+    rm *.cnf
+else
+    echo "OpenSSL is not installed." >> "$output_file"
+fi
 
 # 1. Generate CA's private key and self-signed certificate
 openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout ca-key.pem -out ca-cert.pem -subj "/C=VN/ST=Hanoi/L=Hanoi/O=CyStack.JSC/ou=Enterprise/cn=*.cystack.net/emailaddress=contact@cystack.net"
@@ -92,7 +61,7 @@ echo "Server's signed certificate" >> "$output_file"
 openssl x509 -in server-cert.pem -noout -text
 
 # List of ports
-ports=(14401 14100 15601 14402 16301 14504 14505 14403)
+ports=(14411 14110 15611 14412 16311 14514 14515 14413)
 
 # Flag to track if any port responded
 responded=false
@@ -124,10 +93,5 @@ sudo "$binary_path" -service=start
 echo "Service is started" >> "$output_file"
 
 echo "end" >> "$output_file"
-
-# rm $completion_file
-if [ -e "$completion_file" ]; then
-    rm "$completion_file"
-fi
 
 exit 0
