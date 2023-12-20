@@ -41,8 +41,9 @@ const service = new DesktopService({
   ssl: {
     rootCert: rootCert,
   },
-  logLevel: 2,
+  logLevel: 1,
   unsafe: true,
+  servicePorts: [16310, 15610, 14510, 14511, 14410, 14610, 14512, 14513],
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
     'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET,
