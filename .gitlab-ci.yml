@@ -16,6 +16,17 @@ build_windows_x64:
     - dev
     - tags
 
+build_linux_x64:
+  stage: build
+  script:
+    - pip install requests boto3
+    - python3 deploy.py
+  tags:
+    - cs_newgen
+  only:
+    - dev
+    - tags
+
 build_mac_x64:
   stage: build
   script:

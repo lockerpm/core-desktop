@@ -37,18 +37,18 @@ class Builder:
             self.local_file = f'locker-mac-x64-{self.version}.dmg'
             self.public_file = f'locker-mac-x64-{self.version}-{environment}.dmg'
             if not self.staging:
-                self.commands = ['mv /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
+                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
             else:
-                self.commands = ['mv /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
+                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
         elif self.job == 'build_windows_x64':
             self.os = 'Windows'
             self.architecture = 'x64'
             self.local_file = f'locker-win-x64-{self.version}.msi'
             self.public_file = f'locker-win-x64-{self.version}-{environment}.msi'
             if not self.staging:
-                self.commands = ['mv C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
             else:
-                self.commands = ['mv C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
         else:
             self.os = 'Linux'
             self.architecture = 'x64'
@@ -59,7 +59,7 @@ class Builder:
                                  f'snapcraft upload --release=beta build/locker-{self.version}.snap',
                                  'yarn build-release-linux-appimage', 'yarn build-release-linux-deb']
             else:
-                self.commands = ['mv /home/gitlab-runner/locker_service src/services/', 'yarn install', 'yarn release']
+                self.commands = ['cp /home/gitlab-runner/locker_service src/services/', 'yarn install', 'yarn release']
 
     def get_version(self):
         resp = requests.post(os.getenv('GET_VERSION_URL'), headers=self.headers, json=self.payload).text
