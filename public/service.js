@@ -39,7 +39,8 @@ const service = new DesktopService({
     rootCert: rootCert,
   },
   logLevel: 1,
-  unsafe: true
+  unsafe: true,
+  servicePorts: [16310, 15610, 14510, 14511, 14410, 14610, 14512, 14513]
 })
 
 module.exports = {
