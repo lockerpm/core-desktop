@@ -20,7 +20,7 @@ build_mac_x64:
   stage: build
   script:
     - pip install requests boto3
-    - python deploy.py
+    - python3 deploy.py
   tags:
     - mac-intel
   only:
