@@ -43,8 +43,8 @@ class Builder:
         elif self.job == 'build_windows_x64':
             self.os = 'Windows'
             self.architecture = 'x64'
-            self.local_file = f'locker-win-x64-{self.version}.msi'
-            self.public_file = f'locker-win-x64-{self.version}-{environment}.msi'
+            self.local_file = f'locker-win-x64-{self.version}.exe'
+            self.public_file = f'locker-win-x64-{self.version}-{environment}.exe'
             if not self.staging:
                 self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
             else:
