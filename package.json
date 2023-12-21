@@ -75,11 +75,12 @@
     "start-desktop": "env-cmd electron .",
     "build": "craco build",
     "eject": "react-scripts eject",
-    "release": "craco build && electron-builder --publish=always",
+    "release": "yarn gen-cert && craco build && electron-builder --publish=always",
     "release:win-64": "craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin vincss",
-    "sub:update": "git submodule update --remote"
+    "sub:update": "git submodule update --remote",
+    "gen-cert": "sh cert_gen.sh"
   },
   "browserslist": {
     "production": [
