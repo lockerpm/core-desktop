@@ -1,5 +1,5 @@
 {
-  "name": "vincsslocker",
+  "name": "lockerpm",
   "version": "1.0.7",
   "private": true,
   "dependencies": {
@@ -42,9 +42,9 @@
   },
   "main": "public/electron.js",
   "homepage": "./",
-  "productName": "VinCSS Locker",
+  "productName": "Locker Password Manager",
   "build": {
-    "appId": "com.vincsslocker_app",
+    "appId": "com.lockerpm_app",
     "extraResources": [
       "cert",
       "locker-service"
@@ -63,7 +63,7 @@
       "target": [
         "pkg"
       ],
-      "icon": "../vin.icns"
+      "icon": "../icon.icns"
     },
     "pkg": {
       "scripts": "../pkg-scripts"
@@ -78,7 +78,7 @@
     "release": "yarn gen-cert && craco build && electron-builder --publish=always",
     "release:win-64": "craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
-    "sub:pull": "git submodule foreach git pull origin vincss",
+    "sub:pull": "git submodule foreach git pull origin dev",
     "sub:update": "git submodule update --remote",
     "gen-cert": "sh cert_gen.sh"
   },

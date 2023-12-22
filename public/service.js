@@ -33,14 +33,13 @@ const rootCert = (() => {
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: 'https://locker.vincss.net:8443' + '/v3',
+  baseApiUrl: 'https://api.cystack.net/v3',
   storageService,
   ssl: {
     rootCert: rootCert,
   },
   logLevel: 1,
-  unsafe: true,
-  servicePorts: [16310, 15610, 14510, 14511, 14410, 14610, 14512, 14513]
+  unsafe: true
 })
 
 module.exports = {

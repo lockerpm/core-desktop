@@ -23,7 +23,7 @@ echo "Run pkg from: $1" >> "$output_file"
 # Full path to the installation destination. For example: /Applications
 echo "Installation destination: $2" >> "$output_file"
 
-app_resources_path="/Applications/VinCSS Locker.app/Contents/Resources"
+app_resources_path="/Applications/Locker Password Manager.app/Contents/Resources"
 binary_path="$app_resources_path/locker-service"
 cert_path="$app_resources_path/cert"
 
@@ -61,7 +61,7 @@ echo "Server's signed certificate" >> "$output_file"
 openssl x509 -in server-cert.pem -noout -text
 
 # List of ports
-ports=(14411 14110 15611 14412 16311 14514 14515 14413)
+ports=(14401 14100 15601 14402 16301 14504 14505 14403)
 
 # Flag to track if any port responded
 responded=false
