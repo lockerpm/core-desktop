@@ -6,6 +6,8 @@ stages:
   - build
 
 build_mac_x64:
+  environment:
+    name: vincss
   stage: build
   script:
     - pip install requests boto3
@@ -13,6 +15,6 @@ build_mac_x64:
   tags:
     - mac-intel
   only:
-    - duchm-vincss
+    - mac-vincss
     - tags
 
