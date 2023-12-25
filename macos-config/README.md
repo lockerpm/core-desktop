@@ -1,0 +1,1 @@
+Required files for MacOS (arm64 and amd64) installer

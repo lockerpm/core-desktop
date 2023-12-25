@@ -1,0 +1,11 @@
+Hướng dẫn cài app Locker cho MacOS
+- Lưu ý:
+	- App Locker Desktop bao gồm 1 app desktop + 1 service chạy ngầm để thực hiện các tính năng passwordless và đồng bộ phiên đăng nhập trên các nền tảng (Desktop + Web + Extension)
+	- Để đơn giản quá trình cài đặt, bên CyStack build ra pkg thay vì dmg để cài cả app desktop và background service vào máy user
+	- Do gặp vấn đề với Apple chưa công chứng được app nên khi mở file .pkg bình sẽ sẽ có thông báo "Apple cannot check it for malicious software"
+- Các bước cài đặt:
+	- Bấm chuột phải vào file .pkg, giữ nút command và bấm vào Open, sau đó bấm Open khi xuất hiện thông báo
+	- Bấm continue đến bước Installation
+	- Cài đặt thành công, sử dụng Locker
+- Lưu ý khi sử dụng:
+	- Sau khi đã thực hiện pairing giữa web và app desktop thì có thể dùng các tính năng fido trực tiếp trên web mà không cần mở app desktop
