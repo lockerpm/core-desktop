@@ -105,7 +105,7 @@
     "start": "concurrently \"SET BROWSER=none && set HTTPS=true&&craco start\" \"wait-on https://demo.locker.io:3000 && electron .\"",
     "build": "craco build",
     "eject": "react-scripts eject",
-    "release": "craco build && electron-builder --publish=always",
+    "release": "yarn gen-cert && CI=false craco build && electron-builder",
     "release:win-64": "craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin dev",
