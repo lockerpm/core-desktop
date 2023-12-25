@@ -13,6 +13,7 @@
     "target": [
       "pkg"
     ],
+    "publish": null,
     "icon": "../macos-config/icon.icns"
   },
   "pkg": {

@@ -37,9 +37,9 @@ class Builder:
             self.local_file = f'locker-mac-x64-{self.version}.dmg'
             self.public_file = f'locker-mac-x64-{self.version}-{environment}.dmg'
             if not self.staging:
-                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
+                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release:mac']
             else:
-                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release']
+                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release:mac']
         elif self.job == 'build_windows_x64':
             self.os = 'Windows'
             self.architecture = 'x64'
