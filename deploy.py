@@ -89,7 +89,7 @@ class Builder:
             if self.staging:
                 config = Config(connect_timeout=3600, read_timeout=3600)
                 client = boto3.client('s3', config=config)
-                client.upload_file(f'build/{self.local_file}', 'lockerio', f'download/{self.public_file}',
+                client.upload_file(f'dist/{self.local_file}', 'lockerio', f'download/{self.public_file}',
                                    ExtraArgs={'ACL': 'public-read'})
             return self.update_version(True)
         else:
