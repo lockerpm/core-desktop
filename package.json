@@ -106,7 +106,7 @@
     "build": "craco build",
     "eject": "react-scripts eject",
     "release": "yarn gen-cert && CI=false craco build && electron-builder",
-    "release:win-64": "$env:CI=\"false\"; craco build && electron-builder build --win --x64",
+    "release:win-64": "setx CI false && craco build && electron-builder build --win --x64",
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin dev",
     "sub:update": "git submodule update --remote"
