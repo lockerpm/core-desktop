@@ -46,9 +46,9 @@ class Builder:
             self.local_file = f'locker-win-x64-{self.version}.exe'
             self.public_file = f'locker-win-x64-{self.version}-{environment}.exe'
             if not self.staging:
-                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release:win-64']
             else:
-                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release:win-64']
         else:
             self.os = 'Linux'
             self.architecture = 'x64'
@@ -62,6 +62,14 @@ class Builder:
                 self.commands = ['cp /home/gitlab-runner/locker_service src/services/', 'yarn install', 'yarn release']
 
     def get_version(self):
+        if self.job == 'build_mac_arm64':
+            self.payload['platform'] = 'mac-arm64'
+        elif self.job == 'build_mac_x64':
+            self.payload['platform'] = 'mac-x64'
+        elif self.job == 'build_windows_x64':
+            self.payload['platform'] = 'windows'
+        else:
+            self.payload['platform'] = 'linux'
         resp = requests.post(os.getenv('GET_VERSION_URL'), headers=self.headers, json=self.payload).text
         return json.loads(resp)['version']
 
