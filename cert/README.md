@@ -1,0 +1,1 @@
+This folder is used to keep certs in macos app, do not delete

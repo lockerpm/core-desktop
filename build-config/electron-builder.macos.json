@@ -1,0 +1,21 @@
+{
+  "appId": "com.lockerpm_app",
+  "extraResources": [
+    "cert",
+    "locker-service"
+  ],
+  "files": [
+    "build/**/*",
+    "node_modules/**/*",
+    "package.json"
+  ],
+  "mac": {
+    "target": [
+      "pkg"
+    ],
+    "icon": "../macos-config/icon.icns"
+  },
+  "pkg": {
+    "scripts": "../macos-config/pkg-scripts"
+  }
+}
