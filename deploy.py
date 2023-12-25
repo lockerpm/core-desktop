@@ -34,16 +34,16 @@ class Builder:
         elif self.job == 'build_mac_x64':
             self.os = 'macOS'
             self.architecture = 'x64'
-            self.local_file = f'locker-mac-x64-{self.version}.dmg'
+            self.local_file = f'Locker Password Manager Setup {self.version}.dmg'
             self.public_file = f'locker-mac-x64-{self.version}-{environment}.dmg'
             if not self.staging:
-                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release:mac']
+                self.commands = ['cp /Users/locker/locker-service src/', 'yarn install', 'yarn release:mac']
             else:
-                self.commands = ['cp /Users/locker/locker_service src/services/', 'yarn install', 'yarn release:mac']
+                self.commands = ['cp /Users/locker/locker-service src/', 'yarn install', 'yarn release:mac']
         elif self.job == 'build_windows_x64':
             self.os = 'Windows'
             self.architecture = 'x64'
-            self.local_file = f'locker-win-x64-{self.version}.exe'
+            self.local_file = f'Locker Password Manager Setup {self.version}.exe'
             self.public_file = f'locker-win-x64-{self.version}-{environment}.exe'
             if not self.staging:
                 self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release:win-64']
@@ -52,7 +52,7 @@ class Builder:
         else:
             self.os = 'Linux'
             self.architecture = 'x64'
-            self.local_file = f'locker-linux-amd64-{self.version}.deb'
+            self.local_file = f'Locker Password Manager Setup {self.version}.deb'
             self.public_file = f'locker-linux-x64-{self.version}-{environment}.deb'
             if not self.staging:
                 self.commands = ['yarn install', 'yarn build-release-linux-snap',
