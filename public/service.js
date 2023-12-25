@@ -3,6 +3,7 @@ const path = require('node:path');
 const Store = require('electron-store');
 const isDev = require('electron-is-dev');
 const os = require('os')
+const constants = require('./constants.json')
 
 isDev && require('dotenv').config()
 
@@ -44,7 +45,7 @@ const rootCert = (() => {
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
-  baseApiUrl: `${process.env.REACT_APP_API_URL}/v3`,
+  baseApiUrl: `${process.env.REACT_APP_API_URL || constants.REACT_APP_API_URL}/v3`,
   storageService,
   ssl: {
     rootCert: rootCert,
@@ -52,8 +53,8 @@ const service = new DesktopService({
   logLevel: 1,
   unsafe: true,
   apiHeaders: {
-    'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID,
-    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET,
+    'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID || constants.REACT_APP_CF_ACCESS_CLIENT_ID,
+    'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET || constants.REACT_APP_CF_ACCESS_CLIENT_SECRET,
   }
 })
 
