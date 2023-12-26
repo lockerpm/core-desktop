@@ -49,9 +49,9 @@ class Builder:
             self.local_file = f'Locker Password Manager Setup {self.version}.exe'
             self.public_file = f'locker-win-x64-{self.version}-{environment}.exe'
             if not self.staging:
-                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release:win-64']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\service\\', 'yarn install', 'yarn release:win-64']
             else:
-                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\services\\', 'yarn install', 'yarn release:win-64']
+                self.commands = ['cp C:\\dangvh\\locker_service.exe src\\service\\', 'yarn install', 'yarn release:win-64']
         else:
             self.os = 'Linux'
             self.architecture = 'x64'
