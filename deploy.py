@@ -22,6 +22,9 @@ class Builder:
         }
         self.version = self.get_version()
 
+        self.update_env()
+
+
         if self.job == 'build_mac_arm64':
             self.os = 'macOS'
             self.architecture = 'arm64'
@@ -34,8 +37,8 @@ class Builder:
         elif self.job == 'build_mac_x64':
             self.os = 'macOS'
             self.architecture = 'x64'
-            self.local_file = f'Locker Password Manager Setup {self.version}.dmg'
-            self.public_file = f'locker-mac-x64-{self.version}-{environment}.dmg'
+            self.local_file = f'Locker Password Manager-{self.version}.pkg'
+            self.public_file = f'locker-mac-x64-{self.version}-{environment}.pkg'
             if not self.staging:
                 self.commands = ['cp /Users/locker/locker-service src/', 'yarn install', 'yarn release:mac']
             else:
@@ -82,6 +85,15 @@ class Builder:
             return json.loads(resp)['version']
         else:   # version updated
             return self.get_version()
+
+    def update_env(self):
+        constants = json.load(open('public/constants.json'))
+        constants['REACT_APP_API_URL'] = os.getenv('REACT_APP_API_URL')
+        constants['REACT_APP_CF_ACCESS_CLIENT_ID'] = os.getenv('REACT_APP_CF_ACCESS_CLIENT_ID')
+        constants['REACT_APP_CF_ACCESS_CLIENT_SECRET'] = os.getenv('REACT_APP_CF_ACCESS_CLIENT_SECRET')
+        f = open('public/constants.json', 'w')
+        f.write(json.dumps(constants))
+        f.close()
 
     def upload(self):
         # try:
