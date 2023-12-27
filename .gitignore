@@ -28,3 +28,9 @@ yarn-error.log*
 
 *.pem
 *.cert
+locker-service
+locker-service.exe
+locker_service
+locker_service.exe
+*.dmg
+*.pkg

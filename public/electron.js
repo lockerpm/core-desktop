@@ -76,41 +76,59 @@ app.on('activate', function () {
 })
 
 app.whenReady().then(() => {
+  const wrapMethod = async (promise) => {
+    try {
+      const res = await promise
+      return {
+        success: true,
+        res
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          message: error.toString(),
+          code: error.code
+        }
+      }
+    }
+  }
+
   ipcMain.handle('setApiToken', (event, token) => {
     return service.setApiToken(token)
   })
   ipcMain.handle('getFidoDeviceList', () => {
-    return service.getFidoDeviceList()
+    return wrapMethod(service.getFidoDeviceList())
   })
   ipcMain.handle(
     'getPasswordless', (event, params) => {
-      return service.getPasswordless(params)
+      return wrapMethod(service.getPasswordless(params))
     }
   )
   ipcMain.handle(
     'setNewPasswordless', (event, params) => {
-      return service.setNewPasswordless(params)
+      return wrapMethod(service.setNewPasswordless(params))
     }
   )
   ipcMain.handle(
     'login', (event, params) => {
-      return service.login(params)
+      return wrapMethod(service.login(params))
     }
   )
   ipcMain.handle('lock', () => {
-    return service.lock()
+    return wrapMethod(service.lock())
   })
   ipcMain.handle('logout', () => {
-    return service.logout()
+    return wrapMethod(service.logout())
   })
   ipcMain.handle('getCurrentUser', () => {
-    return service.getCurrentUser()
+    return wrapMethod(service.getCurrentUser())
   })
   ipcMain.handle('confirmPairingClient', (event, clientId) => {
-    return service.confirmPairingClient(clientId)
+    return wrapMethod(service.confirmPairingClient(clientId))
   })
   ipcMain.handle('resetPairingCode', (event, clientId) => {
-    return service.resetPairingCode(clientId)
+    return wrapMethod(service.resetPairingCode(clientId))
   })
   ipcMain.handle('getServiceStatus', () => {
     return service.isReady
@@ -122,14 +140,14 @@ app.whenReady().then(() => {
     return service.resetSocket()
   })
   ipcMain.handle('deleteBackupPasswordless', (e, id) => {
-    return service.deleteBackupPasswordless(id)
+    return wrapMethod(service.deleteBackupPasswordless(id))
   })
   ipcMain.handle('listBackupPasswordless', () => {
-    return service.listBackupPasswordless()
+    return wrapMethod(service.listBackupPasswordless())
   })
   ipcMain.handle(
     'setBackupPasswordless', (e, params) => {
-      return service.setBackupPasswordless(params)
+      return wrapMethod(service.setBackupPasswordless(params))
     }
   )
   ipcMain.handle('openShellUrl', (__, url) => {

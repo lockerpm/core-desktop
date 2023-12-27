@@ -1,0 +1,97 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Error: Full path not provided."
+    exit 1
+fi
+
+full_path="$1"
+base_path=$(dirname "$full_path")
+output_file="$base_path/log.txt"
+
+if [ -e "$output_file" ]; then
+    rm "$output_file"
+fi
+
+# Current folder
+pwd > "$output_file"
+echo "Installer version 0.0.4" >> "$output_file"
+
+# Full path to the pkg
+echo "Run pkg from: $1" >> "$output_file"
+
+# Full path to the installation destination. For example: /Applications
+echo "Installation destination: $2" >> "$output_file"
+
+app_resources_path="/Applications/VinCSS Locker.app/Contents/Resources"
+binary_path="$app_resources_path/locker-service"
+cert_path="$app_resources_path/cert"
+
+### CREATE CERTS
+
+cd "$cert_path"
+
+if command -v openssl &> /dev/null; then
+    echo "OpenSSL is installed." >> "$output_file"
+    rm *.pem
+    rm *.srl
+    rm *.cnf
+else
+    echo "OpenSSL is not installed." >> "$output_file"
+fi
+
+# 1. Generate CA's private key and self-signed certificate
+openssl req -x509 -newkey rsa:4096 -days 36500 -nodes -keyout ca-key.pem -out ca-cert.pem -subj "/C=VN/ST=Hanoi/L=Hanoi/O=CyStack.JSC/ou=Enterprise/cn=*.cystack.net/emailaddress=contact@cystack.net"
+
+echo "CA's self-signed certificate" >> "$output_file"
+openssl x509 -in ca-cert.pem -noout -text
+
+# 2. Generate web server's private key and certificate signing request (CSR)
+openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=FR/ST=Ile de France/L=Paris/O=Server tls/ou=server/cn=*.tls/emailaddress=tls@gmail.com"
+
+# Remember that when we develop on localhost, It’s important to add the IP:0.tcp.in.ngrok.io as an Subject Alternative Name (SAN) extension to the certificate.
+echo "subjectAltName=DNS:*.tls,DNS:localhost,IP:0.0.0.0" > server-ext.cnf
+# Or you can use localhost DNS and grpc.ssl_target_name_override variable
+# echo "subjectAltName=DNS:localhost" > server-ext.cnf
+
+# 3. Use CA's private key to sign web server's CSR and get back the signed certificate
+openssl x509 -req -in server-req.pem -days 36500 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -extfile server-ext.cnf
+
+echo "Server's signed certificate" >> "$output_file"
+openssl x509 -in server-cert.pem -noout -text
+
+# List of ports
+ports=(14411 14110 15611 14412 16311 14514 14515 14413)
+
+# Flag to track if any port responded
+responded=false
+
+# Iterate over each port
+for port in "${ports[@]}"; do
+    # Send a GET request to localhost:port/ping-locker-service
+    response=$(curl -s "http://localhost:$port/ping-locker-service")
+
+    # Check if the response contains "pong" (adjust as needed)
+    if [[ "$response" == *"pong"* ]]; then
+        responded=true
+        break  # Exit the loop if any port responds
+    fi
+done
+
+# Check if any port responded
+if [ "$responded" = true ]; then
+    echo "Service is currently running" >> "$output_file"
+    sudo "$binary_path" -service=stop
+    sudo "$binary_path" -service=uninstall
+    echo "Current service is uninstalled" >> "$output_file"
+else
+    echo "Service is not running" >> "$output_file"
+fi
+
+sudo "$binary_path" -service=install
+sudo "$binary_path" -service=start
+echo "Service is started" >> "$output_file"
+
+echo "end" >> "$output_file"
+
+exit 0
