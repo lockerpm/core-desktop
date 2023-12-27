@@ -8491,10 +8491,10 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-locker-desktop-service@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/locker-desktop-service/-/locker-desktop-service-0.1.5.tgz#ac716af9a1658ddf41493a587125fdc005dc5d3c"
-  integrity sha512-iYLOD/wcMMVBU1fmzYL19LdOzbpvRn0IZfq/BYFly3c6OrvlnzkCkuMP8vEsKyFFRkoipnRxWagUOtN4neLJRw==
+locker-desktop-service@^0.1.7:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/locker-desktop-service/-/locker-desktop-service-0.1.8.tgz#1ffb12bace554cda832fe73fda27a04feae560a9"
+  integrity sha512-r2tK6HwE6IBDUfBGX4CjoDDmBQ7wj9NoI4W0Uvk4sO+/v9DenNDdGBXqYXyra9UysY2RXaVxEks0TWTShu82kA==
   dependencies:
     "@grpc/grpc-js" "^1.9.7"
     axios "^1.5.1"
@@ -12833,11 +12833,6 @@ typescript@^4.0.2, typescript@^4.5.4:
   version "4.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
-
-typescript@^5.1.6:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
-  integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
