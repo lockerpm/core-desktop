@@ -7,6 +7,12 @@ const { service } = require(path.join(__dirname, './service.js'));
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
+if (process.platform === 'win32' && process.argv.length >= 2) {
+  app.setAsDefaultProtocolClient('locker-app', process.execPath, [path.resolve(process.argv[1])])
+} else {
+  app.setAsDefaultProtocolClient('locker-app')
+}
+
 let mainWindow;
 
 function createWindow() {
@@ -55,9 +61,26 @@ function createWindow() {
   service.on('userLogout', (data) => {
     mainWindow.webContents.send('event', 'userLogout', data)
   })
+  service.on('customMessageReceived', (data) => {
+    mainWindow.webContents.send('event', 'customMessageReceived', data)
+  })
 
   mainWindow.on('close', function () {
     mainWindow = null;
+  })
+}
+
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (mainWindow.browserWindow) {
+      if (mainWindow.browserWindow.isMinimized()) {
+        mainWindow.browserWindow.restore()
+      }
+      mainWindow.browserWindow.focus()
+    }
   })
 }
 
@@ -73,6 +96,10 @@ app.on('activate', function () {
   if (!mainWindow) {
     createWindow()
   }
+})
+
+app.on('open-url', (event, url) => {
+  dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
 })
 
 app.whenReady().then(() => {
@@ -132,6 +159,12 @@ app.whenReady().then(() => {
   })
   ipcMain.handle('getServiceStatus', () => {
     return service.isReady
+  })
+  ipcMain.handle('setCacheData', (event, data) => {
+    return wrapMethod(service.setCacheData(data))
+  })
+  ipcMain.handle('getCacheData', () => {
+    return service.getCacheData()
   })
   ipcMain.handle('resetGRPC', () => {
     return service.resetGRPC()
