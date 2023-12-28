@@ -35,5 +35,5 @@ build_mac_x64:
   tags:
     - mac-intel
   only:
-    - dev
+    - vincss
     - tags
