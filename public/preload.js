@@ -15,6 +15,8 @@ contextBridge.exposeInMainWorld('service', {
   confirmPairingClient: (clientId) => unwrapMethod(ipcRenderer.invoke('confirmPairingClient', clientId)),
   resetPairingCode: (clientId) => unwrapMethod(ipcRenderer.invoke('resetPairingCode', clientId)),
   getServiceStatus: () => ipcRenderer.invoke('getServiceStatus'),
+  setCacheData: (data) => ipcRenderer.invoke('setCacheData', data),
+  getCacheData: () => ipcRenderer.invoke('getCacheData'),
 
   resetGRPC: () => ipcRenderer.invoke('resetGRPC'),
   resetSocket: () => ipcRenderer.invoke('resetSocket'),

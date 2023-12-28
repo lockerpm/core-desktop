@@ -52,6 +52,7 @@ const service = new DesktopService({
   },
   logLevel: 1,
   unsafe: true,
+  servicePorts: [14411, 14110, 15611, 14412, 16311, 14514, 14515, 14413, 16310],
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID || constants.REACT_APP_CF_ACCESS_CLIENT_ID,
     'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET || constants.REACT_APP_CF_ACCESS_CLIENT_SECRET,

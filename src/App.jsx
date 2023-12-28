@@ -76,9 +76,8 @@ const App = () => {
     const locale = systemServices.get_language()
     dispatch(storeActions.changeLanguage(locale))
     dispatch(storeActions.updateIsDesktop(true))
-    global.store.dispatch(storeActions.updateIsConnected(true))
     i18n.changeLanguage(locale)
-    initJsCore()
+    initJsCore();
   }, [])
 
   useEffect(() => {

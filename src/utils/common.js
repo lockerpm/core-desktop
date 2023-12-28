@@ -18,8 +18,19 @@ const getPublicShareUrl = (send) => {
   )}`
 }
 
+const ssoRedirectUri = () => {
+  return `${process.env.REACT_APP_BASE_URL}/sign-in?client_id=${global.constants.CLIENT_ID}`;
+}
+
+const redirectToAuthSSO = () => {
+  service.openShellUrl(ssoRedirectUri());
+}
+
+
 common.openNewTab = openNewTab;
 common.getPublicShareUrl = getPublicShareUrl;
+common.ssoRedirectUri = ssoRedirectUri;
+common.redirectToAuthSSO = redirectToAuthSSO;
 
 export default {
   ...common,
