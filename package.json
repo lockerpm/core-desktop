@@ -57,7 +57,7 @@
     "sub:init": "git submodule update --init --recursive",
     "sub:pull": "git submodule foreach git pull origin vincss",
     "sub:update": "git submodule update --remote",
-    "gen-cert": "sh cert_gen.sh"
+    "gen-cert": "sh macos-config/cert_gen.sh"
   },
   "browserslist": {
     "production": [
