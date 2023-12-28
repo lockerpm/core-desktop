@@ -13,6 +13,7 @@
   "win": {
     "target": "nsis"
   },
+  "icon": "service/icon.ico",
   "publish": null,
   "nsis": {
     "oneClick": false,
