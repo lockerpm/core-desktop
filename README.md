@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Locker Desktop Self-hosted
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Locker Desktop app, but self-hosted. This app including the main app and a background service. The expected output is an installer that can install both the app and the background service.
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+This is an Electron app
+- Install with `yarn`
+- Pull submodule with `yarn sub:init`
+- Create a `.env` file, refer to `.env.example`
+- Start the backgroud service manually or use the existing Locker app's background service, copy the file `ca-cert.pem` into `/cert` (for macos) and `/service/cert` (for windows)
+- Edit `/public/service.js` if needed, for example, changing `logLevel` or set `servicePorts`
+- In development environment, you will start a web app using `craco`, running at `https://demo.locker.io:3002`, and use electron to render the content of this url. To start both at once, simply run `yarn start`, or if you would like to have more control, use `yarn start-web` and `yarn start-desktop`
+- Make sure that you pointed `demo.locker.io` to `localhost` in your hosts file
 
-### `npm start`
+## Build
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- You can find `electron-build` configuration file for each platform in `/build-config`, you can change `appId` here.
+- If you build locally without CI/CD, update `/public/constants.json` with values from `.env`, just remember to checkout them before `git commit`.
+- Update `productName`in `package.json`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### MacOS
+`/macos-config` keep all mac-related config
+- Put the correct build (x64 or arm64) of `locker-service` in the project root
+- Change `icon.icns` with the correct icon
+- In `pkg-scripts/postinstall`, update `app_name` and `use_their_ports`
+- `yarn release:mac` then find the `.pkg` file in `dist`
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Windows
+`/service` keep all windows-related config (did not rename to `/windows-config` for safety reasons)
+- Put the correct build of `locker_service.exe` in `/service`
+- Change `icon.ico` with the correct icon
+- `yarn release:win-64`
