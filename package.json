@@ -44,7 +44,7 @@
   },
   "main": "public/electron.js",
   "homepage": "./",
-  "productName": "VinCSS Locker",
+  "productName": "VinCSS Password Manager",
   "scripts": {
     "start": "concurrently \"set BROWSER=none && set HTTPS=true&&craco start\" \"wait-on https://demo.locker.io:3000 && electron .\"",
     "start-web": "set BROWSER=none && set HTTPS=true && craco start",
