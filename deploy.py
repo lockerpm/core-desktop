@@ -39,7 +39,7 @@ class Builder:
             self.os = 'macOS'
             self.architecture = 'x64'
             self.local_file = f'Locker Password Manager-{self.version}.pkg'
-            self.public_file = f'locker-mac-x64-{self.version}-{environment}.pkg'
+            self.public_file = f'locker-mac-x64-{self.version}-{self.org}.pkg'
             if not self.staging:
                 self.commands = [f'cp /Users/locker/locker-service-{self.org} ./locker-service', 'yarn install', 'yarn release:mac']
             else:
@@ -48,7 +48,7 @@ class Builder:
             self.os = 'Windows'
             self.architecture = 'x64'
             self.local_file = f'Locker Password Manager Setup {self.version}.exe'
-            self.public_file = f'locker-win-x64-{self.version}-{environment}.exe'
+            self.public_file = f'locker-win-x64-{self.version}-{self.org}.exe'
             if not self.staging:
                 self.commands = [f'cp C:\\dangvh\\locker-service-{self.org}.exe service\\locker_service.exe', 'yarn install', 'yarn release:win-64']
             else:
@@ -57,7 +57,7 @@ class Builder:
             self.os = 'Linux'
             self.architecture = 'x64'
             self.local_file = f'Locker Password Manager Setup {self.version}.deb'
-            self.public_file = f'locker-linux-x64-{self.version}-{environment}.deb'
+            self.public_file = f'locker-linux-x64-{self.version}-{self.org}.deb'
             if not self.staging:
                 self.commands = ['yarn install', 'yarn build-release-linux-snap',
                                  f'snapcraft upload --release=beta build/locker-{self.version}.snap',
@@ -149,6 +149,11 @@ class Builder:
                         {
                             "title": "Version",
                             "value": self.version,
+                            "short": True
+                        },
+                        {
+                            "title": "Organization",
+                            "value": self.org,
                             "short": True
                         }
 
