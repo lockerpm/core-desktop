@@ -19,8 +19,10 @@ function DesktopService() {
   }, [])
 
   const getServiceStatus = async () => {
+    global.store.dispatch(storeActions.toggleLoading(true));
     const isConnected = await service.getServiceStatus();
-    global.store.dispatch(storeActions.updateIsConnected(isConnected))
+    global.store.dispatch(storeActions.updateIsConnected(isConnected));
+    global.store.dispatch(storeActions.toggleLoading(false));
   }
 
   service.onEvent(async (e, event, data) => {
