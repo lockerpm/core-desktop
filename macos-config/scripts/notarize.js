@@ -2,8 +2,7 @@ require('dotenv').config()
 const { notarize } = require('@electron/notarize')
 
 exports.default = async function notarizing(context) {
-  // Currently cannot notorize
-  // "afterSign": "scripts/notarize.js",
+  // TODO: Currently cannot notorize
   return
 
   const { electronPlatformName, appOutDir } = context;  

@@ -2,7 +2,7 @@
   "name": "vincsslocker",
   "version": "1.0.0",
   "private": true,
-  "author": "quyetnv",
+  "author": "Locker",
   "description": "Locker PM Desktop self-hosted",
   "dependencies": {
     "@lockerpm/design": "^1.0.17",
