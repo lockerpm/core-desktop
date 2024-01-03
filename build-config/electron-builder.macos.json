@@ -9,12 +9,17 @@
     "node_modules/**/*",
     "package.json"
   ],
+  "afterSign": "macos-config/scripts/notarize.js",
   "mac": {
     "target": [
       "pkg"
     ],
     "publish": null,
-    "icon": "../macos-config/icon.icns"
+    "icon": "../macos-config/icon.icns",
+    "category": "public.app-category.utilities",
+    "hardenedRuntime": true,
+    "entitlements": "./macos-config/entitlements.mac.plist",
+    "entitlementsInherit": "./macos-config/entitlements.mac.plist"
   },
   "pkg": {
     "scripts": "../macos-config/pkg-scripts"
