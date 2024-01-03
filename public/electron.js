@@ -99,7 +99,8 @@ app.on('activate', function () {
 })
 
 app.on('open-url', (event, url) => {
-  dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
+  // Handle open app from url in MacOS
+  // Currently do nothing
 })
 
 app.whenReady().then(() => {
