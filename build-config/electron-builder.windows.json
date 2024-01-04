@@ -26,8 +26,8 @@
   },
   "extraFiles": [
     {
-      "from": "service/locker_service.exe",
-      "to": "locker_service.exe"
+      "from": "service/locker-service.exe",
+      "to": "locker-service.exe"
     },
     {
       "from": "service/cbor.dll",

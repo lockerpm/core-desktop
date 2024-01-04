@@ -30,7 +30,5 @@ yarn-error.log*
 *.cert
 locker-service
 locker-service.exe
-locker_service
-locker_service.exe
 *.dmg
 *.pkg
