@@ -33,6 +33,6 @@ This is an Electron app
 
 ### Windows
 `/service` keep all windows-related config (Note: I did not rename it to `/windows-config` for safety reasons)
-- Put the correct build of `locker_service.exe` in `/service`
+- Put the correct build of `locker-service.exe` in `/service`
 - Change `icon.ico` with the correct icon
 - `yarn release:win-64`
