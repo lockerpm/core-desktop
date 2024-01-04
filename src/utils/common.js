@@ -1,6 +1,8 @@
 import common from "../web-sh/src/utils/common";
 import global from "../web-sh/src/config/global";
 
+import { Utils } from "../web-sh/src/core-js/src/misc/utils";
+
 const openNewTab = (link) => {
   const regex = global.patterns.LINK
   if (regex.test(link)) {
