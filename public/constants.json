@@ -1,5 +1,5 @@
 {
-  "REACT_APP_API_URL": "xxx",
+  "REACT_APP_API_URL": "https://locker.vincss.net:8443",
   "REACT_APP_CF_ACCESS_CLIENT_ID": "xxx",
   "REACT_APP_CF_ACCESS_CLIENT_SECRET": "xxx"
 }

@@ -44,7 +44,7 @@ $KeyPem | Out-File -Filepath $certDir\server-key.pem -Encoding Ascii
 
 # setup service
 # setup service
-$GatewayPorts = @("14401", "14100", "15601", "14402", "16301", "14504", "14505", "14403")
+$GatewayPorts = @("14411", "14110", "15611", "14412", "16311", "14514", "14515", "14413")
 $WorkingPort = $null
 for ($i=0; $i -lt $GatewayPorts.Length; $i++) {
     # Commands to execute for each item in the array
@@ -67,7 +67,7 @@ for ($i=0; $i -lt $GatewayPorts.Length; $i++) {
 .\locker-service.exe -service=start
 
 if ($WorkingPort -eq $null) {
-    $WorkingPort = "14401"
+    $WorkingPort = "14411"
 }
 
 $uri = "http://localhost:" + $WorkingPort + "/ping-locker-service"
