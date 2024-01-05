@@ -2,7 +2,8 @@
   "appId": "com.lockerpm_app",
   "extraResources": [
     "cert",
-    "locker-service"
+    "locker-service",
+    "service-config.json"
   ],
   "files": [
     "build/**/*",

@@ -42,6 +42,36 @@ const rootCert = (() => {
   }
 })()
 
+const serverCert = (() => {
+  const platform = os.platform()
+  let devPath = '../service/cert/server-cert.pem'
+  let prodPath = '../cert/server-cert.pem'
+  if (platform === 'darwin') {
+    devPath = '../cert/server-cert.pem'
+    prodPath = './cert/server-cert.pem'
+  }
+  if (isDev) {
+    return fs.readFileSync(path.join(__dirname, devPath))
+  } else {
+    return fs.readFileSync(path.resolve(process.resourcesPath, prodPath))
+  }
+})()
+
+const serverKey = (() => {
+  const platform = os.platform()
+  let devPath = '../service/cert/server-key.pem'
+  let prodPath = '../cert/server-key.pem'
+  if (platform === 'darwin') {
+    devPath = '../cert/server-key.pem'
+    prodPath = './cert/server-key.pem'
+  }
+  if (isDev) {
+    return fs.readFileSync(path.join(__dirname, devPath))
+  } else {
+    return fs.readFileSync(path.resolve(process.resourcesPath, prodPath))
+  }
+})()
+
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
@@ -50,13 +80,17 @@ const service = new DesktopService({
   ssl: {
     rootCert: rootCert,
   },
+  socketSsl: {
+    cert: serverCert,
+    key: serverKey
+  },
   logLevel: 1,
   unsafe: true,
-  servicePorts: [14411, 14110, 15611, 14412, 16311, 14514, 14515, 14413, 16310],
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID || constants.REACT_APP_CF_ACCESS_CLIENT_ID,
     'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET || constants.REACT_APP_CF_ACCESS_CLIENT_SECRET,
-  }
+  },
+  serviceAlias: 'test'
 })
 
 module.exports = {

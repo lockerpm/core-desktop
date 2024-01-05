@@ -1,0 +1,47 @@
+#!/bin/bash
+
+app_name="Locker Password Manager"
+
+if [ -z "$1" ]; then
+    echo "Error: Full path not provided."
+    exit 1
+fi
+
+full_path="$1"
+base_path=$(dirname "$full_path")
+output_file="$base_path/log.txt"
+
+if [ -e "$output_file" ]; then
+    rm "$output_file"
+fi
+
+echo "Preinstall" > "$output_file"
+
+# Current folder
+pwd >> "$output_file"
+
+echo "Installer version 0.1.0" >> "$output_file"
+echo "App name: $app_name" >> "$output_file"
+
+# Full path to the pkg
+echo "Run pkg from: $1" >> "$output_file"
+
+# Full path to the installation destination. For example: /Applications
+echo "Installation destination: $2" >> "$output_file"
+
+app_resources_path="/Applications/$app_name.app/Contents/Resources"
+binary_path="$app_resources_path/locker-service"
+cert_path="$app_resources_path/cert"
+
+# Remove old cert from keychain
+
+CERT_PATH="$cert_path/server-cert.pem"
+
+SHA1_HASH=$(openssl x509 -noout -fingerprint -sha1 -inform pem -in "$CERT_PATH" | cut -d "=" -f 2 | tr -d ":" | tr '[:upper:]' '[:lower:]')
+
+echo "Removing old cert $SHA1_HASH" >> "$output_file"
+
+security delete-certificate -Z "$SHA1_HASH" -t ~/Library/Keychains/login.keychain >> "$output_file"
+echo "Cert removed from login keychain" >> "$output_file"
+
+exit 0

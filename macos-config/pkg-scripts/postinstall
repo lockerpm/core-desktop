@@ -1,7 +1,6 @@
 #!/bin/bash
 
 app_name="Locker Password Manager"
-use_their_ports=false
 
 if [ -z "$1" ]; then
     echo "Error: Full path not provided."
@@ -12,14 +11,11 @@ full_path="$1"
 base_path=$(dirname "$full_path")
 output_file="$base_path/log.txt"
 
-if [ -e "$output_file" ]; then
-    rm "$output_file"
-fi
+echo "Postinstall" >> "$output_file"
 
 # Current folder
-pwd > "$output_file"
+pwd >> "$output_file"
 
-echo "Installer version 0.0.5" >> "$output_file"
 echo "App name: $app_name" >> "$output_file"
 
 # Full path to the pkg
@@ -32,7 +28,9 @@ app_resources_path="/Applications/$app_name.app/Contents/Resources"
 binary_path="$app_resources_path/locker-service"
 cert_path="$app_resources_path/cert"
 
-### CREATE CERTS
+
+### ----------- CREATE CERTS -----------
+
 
 cd "$cert_path"
 
@@ -52,7 +50,7 @@ echo "CA's self-signed certificate" >> "$output_file"
 openssl x509 -in ca-cert.pem -noout -text
 
 # 2. Generate web server's private key and certificate signing request (CSR)
-openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=FR/ST=Ile de France/L=Paris/O=Server tls/ou=server/cn=*.tls/emailaddress=tls@gmail.com"
+openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=VN/ST=Hanoi/L=Hanoi/O=LockerServiceServer/ou=server/cn=*.tls/emailaddress=tls@gmail.com"
 
 # Remember that when we develop on localhost, It’s important to add the IP:0.tcp.in.ngrok.io as an Subject Alternative Name (SAN) extension to the certificate.
 echo "subjectAltName=DNS:*.tls,DNS:localhost,IP:0.0.0.0" > server-ext.cnf
@@ -65,41 +63,27 @@ openssl x509 -req -in server-req.pem -days 36500 -CA ca-cert.pem -CAkey ca-key.p
 echo "Server's signed certificate" >> "$output_file"
 openssl x509 -in server-cert.pem -noout -text
 
-# List of ports
-ports=(14401 14100 15601 14402 16301 14504 14505 14403)
-if [ "$use_their_ports" = true ]; then
-    ports=(14411 14110 15611 14412 16311 14514 14515 14413)
-fi
-echo "Checking existing background service on: ${ports[@]}" >> "$output_file"
 
-# Flag to track if any port responded
-responded=false
+### ----------- INSTALL SERVICE -----------
 
-# Iterate over each port
-for port in "${ports[@]}"; do
-    # Send a GET request to localhost:port/ping-locker-service
-    response=$(curl -s "http://localhost:$port/ping-locker-service")
 
-    # Check if the response contains "pong" (adjust as needed)
-    if [[ "$response" == *"pong"* ]]; then
-        responded=true
-        break  # Exit the loop if any port responds
-    fi
-done
-
-# Check if any port responded
-if [ "$responded" = true ]; then
-    echo "Service is currently running" >> "$output_file"
-    sudo "$binary_path" -service=stop
-    sudo "$binary_path" -service=uninstall
-    echo "Current service is uninstalled" >> "$output_file"
-else
-    echo "Service is not running" >> "$output_file"
-fi
+sudo "$binary_path" -service=stop
+sudo "$binary_path" -service=uninstall
+echo "Current service is uninstalled" >> "$output_file"
 
 sudo "$binary_path" -service=install
 sudo "$binary_path" -service=start
 echo "Service is started" >> "$output_file"
+
+
+### ----------- ADD CERT TO KEYCHAIN -----------
+
+
+CERT_PATH="$cert_path/server-cert.pem"
+
+security add-trusted-cert -d -r trustAsRoot -p ssl -k ~/Library/Keychains/login.keychain "$CERT_PATH" >> "$output_file"
+echo "Cert added to login keychain" >> "$output_file"
+
 
 echo "end" >> "$output_file"
 

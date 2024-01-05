@@ -11,7 +11,7 @@ echo "CA's self-signed certificate"
 openssl x509 -in ca-cert.pem -noout -text
 
 # 2. Generate web server's private key and certificate signing request (CSR)
-openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=FR/ST=Ile de France/L=Paris/O=Server tls/ou=server/cn=*.tls/emailaddress=tls@gmail.com"
+openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=VN/ST=Hanoi/L=Hanoi/O=LockerServiceServer/ou=server/cn=*.tls/emailaddress=tls@gmail.com"
 
 # Remember that when we develop on localhost, It’s important to add the IP:0.tcp.in.ngrok.io as an Subject Alternative Name (SAN) extension to the certificate.
 echo "subjectAltName=DNS:*.tls,DNS:localhost,IP:0.0.0.0" > server-ext.cnf
