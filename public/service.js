@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('node:path');
-const Store = require('electron-store');
+// const Store = require('electron-store');
 const isDev = require('electron-is-dev');
 const os = require('os')
 const constants = require('./constants.json')
@@ -12,7 +12,9 @@ const { DesktopService } = require('locker-desktop-service')
 class MockStorageService {
   storage
   constructor() {
-    this.storage = new Store()
+    // TODO: electron-store is unsafe in app-level
+    this.storage = new Map()
+    // this.storage = new Store()
   }
   getSecure(key) {
     return Promise.resolve(this.storage.get(key) || null)

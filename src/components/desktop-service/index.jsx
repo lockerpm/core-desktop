@@ -18,14 +18,16 @@ function DesktopService() {
     getServiceStatus();
   }, [])
 
-  const getServiceStatus = async () => {
+  const getServiceStatus = async (retry = 0) => {
     global.store.dispatch(storeActions.toggleLoading(true));
-    let isConnected = await service.getServiceStatus();
-    if (!isConnected) {
-      await service.resetGRPC();
-      await getServiceStatus();
+    const isConnected = await service.getServiceStatus();
+    global.store.dispatch(storeActions.updateIsConnected(isConnected));
+    if (!isConnected && retry < 4) {
+      console.log(`Service is not ready, retry ${retry + 1} time(s)`)
+      await service.resetGRPC()
+      getServiceStatus(retry + 1)
     } else {
-      global.store.dispatch(storeActions.updateIsConnected(isConnected));
+      console.log(`Service is ready after retrying ${retry} time(s)`)
       global.store.dispatch(storeActions.toggleLoading(false));
     }
   }
