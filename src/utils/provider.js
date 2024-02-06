@@ -1,12 +1,16 @@
 import React, { } from 'react';
 import moment from 'moment';
 import { IntlProvider } from 'react-intl';
-import { ConfigProvider } from '@lockerpm/design';
 import { connect } from 'react-redux';
+
+import { ConfigProvider } from '@lockerpm/design';
+
 import vi_VN from '@lockerpm/design/es/locale/vi_VN';
 import en_US from '@lockerpm/design/es/locale/en_US';
 import locale from '../locale/index';
+
 import 'moment/locale/vi';
+
 import global from '../web-sh/src/config/global';
 
 import keys from '../config/keys'

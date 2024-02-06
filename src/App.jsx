@@ -1,38 +1,44 @@
 import React, { useEffect } from 'react'
-import { Layout, Modal, notification } from '@lockerpm/design'
-import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { useNavigate, useLocation } from 'react-router-dom'
+
+import {
+  Layout,
+  Modal,
+  notification
+} from '@lockerpm/design'
 
 import {
   ExclamationCircleOutlined
 } from '@ant-design/icons'
 
-import './assets/css/index.scss'
-
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-
-import { navigatePage } from './web-sh/src/utils/navigate'
-import { DesktopService } from './components'
-
-import common from './utils/common'
-
+import desktopCommonComponents from './components/common'
 import AdminLayout from './web-sh/src/layouts/admin'
 import AuthLayout from './web-sh/src/layouts/auth'
 import ErrorsLayout from './web-sh/src/layouts/errors'
 import PublicLayout from './web-sh/src/layouts/public'
 
-import systemServices from './services/system'
-import commonServices from './services/common'
+import './components'
+import pages from './pages'
 
 import storeActions from './store/actions'
 
+import systemServices from './services/system'
+import commonServices from './services/common'
+
+import { navigatePage } from './web-sh/src/utils/navigate'
+
 import i18n from './config/i18n'
+import common from './utils/common'
 import global from './web-sh/src/config/global'
 import jsCore from './web-sh/src/core-js/index'
 
-import pages from './pages'
+import './assets/css/index.scss'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+const { DesktopService } = desktopCommonComponents;
 
 const App = () => {
   const navigate = useNavigate()
@@ -75,7 +81,6 @@ const App = () => {
     commonServices.init_server();
     const locale = systemServices.get_language()
     dispatch(storeActions.changeLanguage(locale))
-    dispatch(storeActions.updateIsDesktop(true))
     i18n.changeLanguage(locale)
     initJsCore();
   }, [])

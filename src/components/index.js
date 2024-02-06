@@ -1,5 +1,9 @@
-import DesktopService from "./desktop-service";
+import desktopCommonComponents from "./common";
+import desktopFormsComponents from "./forms";
+import desktopModalsComponents from "./modals";
 
-export {
-  DesktopService
-};
+export default {
+  desktopCommonComponents,
+  desktopFormsComponents,
+  desktopModalsComponents
+}

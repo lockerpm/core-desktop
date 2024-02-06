@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import global from '../../web-sh/src/config/global'
-import storeActions from '../../store/actions'
-
-import authServices from '../../services/auth'
-
 import { useSelector } from 'react-redux'
 
-import PairingConfirmModal from './PairingConfirm'
+import desktopModalsComponents from '../modals'
+
+import authServices from '../../services/auth'
+import storeActions from '../../store/actions'
+
+import global from '../../web-sh/src/config/global'
+
+const { PairingConfirmModal } = desktopModalsComponents;
 
 function DesktopService() {
   const userInfo = useSelector((state) => state.auth.userInfo);

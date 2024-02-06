@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { } from "react";
 import {
   Modal,
 } from '@lockerpm/design';
@@ -9,7 +9,9 @@ import { } from '@ant-design/colors';
 import { useTranslation } from "react-i18next";
 import { } from "@ant-design/icons";
 
-import { PairingForm } from "../../web-sh/src/components";
+import desktopFormsComponents from "../forms";
+
+const { Pairing } = desktopFormsComponents;
 
 const PairingConfirmModal = (props) => {
   const { t } = useTranslation()
@@ -26,7 +28,7 @@ const PairingConfirmModal = (props) => {
       width={460}
       footer={false}
     >
-      <PairingForm
+      <Pairing
         onConfirm={onClose}
       />
     </Modal>
