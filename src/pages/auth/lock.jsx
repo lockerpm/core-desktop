@@ -20,8 +20,8 @@ import {
   UsbOutlined
 } from "@ant-design/icons";
 
-import desktopFormsComponents from "../../components/forms";;
-import desktopAuthComponents from "./components";
+import formsComponents from "../../components/forms";;
+import authComponents from "./components";
 
 import images from "../../assets/images";
 
@@ -33,8 +33,8 @@ import common from "../../utils/common";
 
 import '../../web-sh/src/pages/auth/css/auth.scss';
 
-const { SecurityKey } = desktopFormsComponents;
-const { Logo } = desktopAuthComponents;
+const { SecurityKey } = formsComponents;
+const { Logo } = authComponents;
 
 const { AuthBgImage } = images;
 

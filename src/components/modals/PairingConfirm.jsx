@@ -9,9 +9,9 @@ import { } from '@ant-design/colors';
 import { useTranslation } from "react-i18next";
 import { } from "@ant-design/icons";
 
-import desktopFormsComponents from "../forms";
+import formsComponents from "../forms";
 
-const { Pairing } = desktopFormsComponents;
+const { Pairing } = formsComponents;
 
 const PairingConfirmModal = (props) => {
   const { t } = useTranslation()

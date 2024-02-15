@@ -1,13 +1,13 @@
-import modalsComponents from "../../web-sh/src/components/modals";
+import modals from "../../web-sh/src/components/modals";
 
 import PasswordConfirmModal from "./PasswordConfirm";
 import PairingConfirmModal from "./PairingConfirm";
 
-modalsComponents.PasswordConfirmModal = PasswordConfirmModal;
+modals.PasswordConfirmModal = PasswordConfirmModal;
 
-const desktopModalsComponents = {
-  ...modalsComponents,
+const modalsComponents = {
+  ...modals,
   PairingConfirmModal
 }
 
-export default desktopModalsComponents
+export default modalsComponents

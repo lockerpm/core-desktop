@@ -1,9 +1,9 @@
-import formsComponents from "../../web-sh/src/components/forms";
+import forms from "../../web-sh/src/components/forms";
 
 import Pairing from "./Pairing";
 
-formsComponents.Pairing = Pairing;
+forms.Pairing = Pairing
 
-const desktopFormsComponents = formsComponents
+const formsComponents = forms
 
-export default desktopFormsComponents
+export default formsComponents

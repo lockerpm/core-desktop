@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector } from 'react-redux';
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { } from "react-router-dom";
 
 import {
   Card,
@@ -12,7 +12,7 @@ import {
   ArrowLeftOutlined
 } from "@ant-design/icons";
 
-import authFormsComponents from "../../../web-sh/src/pages/auth/components/forms";
+import authFormsComponents from "./forms";
 
 import ssoConfigServices from "../../../web-sh/src/services/sso-config";
 import authServices from "../../../services/auth";

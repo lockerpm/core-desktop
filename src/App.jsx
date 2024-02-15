@@ -13,7 +13,8 @@ import {
   ExclamationCircleOutlined
 } from '@ant-design/icons'
 
-import desktopCommonComponents from './components/common'
+import commonComponents from './components/common'
+
 import AdminLayout from './web-sh/src/layouts/admin'
 import AuthLayout from './web-sh/src/layouts/auth'
 import ErrorsLayout from './web-sh/src/layouts/errors'
@@ -38,7 +39,7 @@ import './assets/css/index.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-const { DesktopService } = desktopCommonComponents;
+const { DesktopService } = commonComponents;
 
 const App = () => {
   const navigate = useNavigate()

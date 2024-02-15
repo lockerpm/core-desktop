@@ -1,9 +1,9 @@
-import commonComponents from "../../web-sh/src/components/common";
+import common from "../../web-sh/src/components/common";
 
 import DesktopService from "./DesktopService";
 
-const desktopCommonComponents = {
-  ...commonComponents,
+const commonComponents = {
+  ...common,
   DesktopService
 }
-export default desktopCommonComponents
+export default commonComponents

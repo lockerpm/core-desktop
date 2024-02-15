@@ -8,10 +8,10 @@ import {
   RightOutlined
 } from "@ant-design/icons";
 
-import desktopCommonComponents from "../../../components/common";
+import commonComponents from "../../../components/common";
 import securityComponents from "../../../web-sh/src/pages/admin/settings/components/security";
 
-const { PageHeader } = desktopCommonComponents;
+const { PageHeader } = commonComponents;
 const {
   ChangePassword,
   SecurityKey,

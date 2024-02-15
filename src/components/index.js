@@ -1,9 +1,9 @@
-import desktopCommonComponents from "./common";
-import desktopFormsComponents from "./forms";
-import desktopModalsComponents from "./modals";
+import commonComponents from "./common";
+import formsComponents from "./forms";
+import modalsComponents from "./modals";
 
 export default {
-  desktopCommonComponents,
-  desktopFormsComponents,
-  desktopModalsComponents
+  commonComponents,
+  formsComponents,
+  modalsComponents
 }

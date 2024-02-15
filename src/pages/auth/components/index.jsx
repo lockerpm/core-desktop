@@ -1,10 +1,10 @@
-import authComponents from "../../../web-sh/src/pages/auth/components";
+import auth from "../../../web-sh/src/pages/auth/components";
 
 import "./forms/index"
 import Enterprise from "./Enterprise";
 
-authComponents.Enterprise = Enterprise;
+auth.Enterprise = Enterprise;
 
-const desktopAuthComponents = authComponents;
+const authComponents = auth;
 
-export default desktopAuthComponents;
+export default authComponents;

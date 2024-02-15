@@ -12,13 +12,13 @@ import { InfoCircleFilled } from "@ant-design/icons";
 
 import { orange } from '@ant-design/colors';
 
-import desktopFormsComponents from "../forms";
+import formsComponents from "../forms";
 
 import authServices from "../../services/auth";
 
 import global from "../../web-sh/src/config/global";;
 
-const { SecurityKey, Passkey } = desktopFormsComponents;
+const { SecurityKey, Passkey } = formsComponents;
 
 const PasswordConfirmModal = (props) => {
   const { t } = useTranslation();

@@ -1,9 +1,9 @@
-import authFormsComponents from "../../../../web-sh/src/pages/auth/components/forms";
+import authForms from "../../../../web-sh/src/pages/auth/components/forms";
 
 import SignInForm from "./SignForm";
 
-authFormsComponents.SignInForm = SignInForm;
+authForms.SignInForm = SignInForm;
 
-const desktopAuthFormsComponents = authFormsComponents;
+const authFormsComponents = authForms
 
-export default desktopAuthFormsComponents;
+export default authFormsComponents;

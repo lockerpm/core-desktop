@@ -17,8 +17,8 @@ import {
   ArrowLeftOutlined,
 } from '@ant-design/icons'
 
-import desktopFormsComponents from "../../components/forms";
-import desktopAuthComponents from "./components";
+import formsComponents from "../../components/forms";
+import authComponents from "./components";
 
 import images from "../../assets/images";
 
@@ -33,8 +33,8 @@ import jsCore from "../../web-sh/src/core-js"
 
 import '../../web-sh/src/pages/auth/css/auth.scss';
 
-const { ChangePassword, SecurityKey } = desktopFormsComponents;
-const { EnterOtp } = desktopAuthComponents;
+const { ChangePassword, SecurityKey } = formsComponents;
+const { EnterOtp } = authComponents;
 
 const { WelcomeImg } = images;
 const Authenticate = () => {
