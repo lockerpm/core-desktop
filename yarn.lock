@@ -2045,7 +2045,7 @@
     scroll-into-view-if-needed "^3.0.3"
     throttle-debounce "^5.0.0"
 
-"@lockerpm/desktop-service@^1.0.4":
+"@lockerpm/desktop-service@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@lockerpm/desktop-service/-/desktop-service-1.1.2.tgz#2b0883c438d4221a37b8ff18c4c8c0bbd4233021"
   integrity sha512-bDP1nZd8dk3UezobtK6TGnDWyBMP2nSEX50b2otVrTegJRiHWklHnvQiA2KlbLEYZAP4uQHtmsMrUsmlEDnEDQ==

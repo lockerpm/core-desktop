@@ -34,7 +34,7 @@ const Enterprise = (props) => {
   const [existed, setExisted] = useState(false);
   const [checking, setChecking] = useState(false);
 
-  const ssoAccount = authServices.sso_account();
+  const ssoAccount = common.getSsoAccount();
 
   useEffect(() => {
     checkExist();

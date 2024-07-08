@@ -15,25 +15,20 @@ import {
 
 import commonComponents from './components/common'
 
-import AdminLayout from './web-sh/src/layouts/admin'
-import AuthLayout from './web-sh/src/layouts/auth'
-import ErrorsLayout from './web-sh/src/layouts/errors'
-import PublicLayout from './web-sh/src/layouts/public'
+import AdminLayout from './web-sh/src/layouts'
+import OtherLayout from './web-sh/src/layouts/other'
 
 import './components'
 import pages from './pages'
 
 import storeActions from './store/actions'
-
-import systemServices from './services/system'
 import commonServices from './services/common'
-
-import { navigatePage } from './web-sh/src/utils/navigate'
 
 import i18n from './config/i18n'
 import common from './utils/common'
-import global from './web-sh/src/config/global'
+import global from './config/global'
 import jsCore from './web-sh/src/core-js/index'
+import { navigatePage } from './web-sh/src/utils/navigate'
 
 import './assets/css/index.scss'
 import 'slick-carousel/slick/slick.css'
@@ -80,7 +75,7 @@ const App = () => {
 
   useEffect(() => {
     commonServices.init_server();
-    const locale = systemServices.get_language()
+    const locale = common.getLanguage()
     dispatch(storeActions.changeLanguage(locale))
     i18n.changeLanguage(locale)
     initJsCore();
@@ -107,19 +102,19 @@ const App = () => {
         />
       }
       {
-        currentPage?.type === 'auth' && <AuthLayout
+        currentPage?.type === 'auth' && <OtherLayout
           routers={global.routers.AUTH_ROUTERS}
           pages={pages}
         />
       }
       {
-        currentPage?.type === 'error' && <ErrorsLayout
+        currentPage?.type === 'error' && <OtherLayout
           routers={global.routers.ERROR_ROUTERS}
           pages={pages}
         />
       }
       {
-        currentPage?.type === 'public' && <PublicLayout
+        currentPage?.type === 'public' && <OtherLayout
           routers={global.routers.PUBLIC_ROUTERS}
           pages={pages}
         />

@@ -16,7 +16,7 @@ import formsComponents from "../forms";
 
 import authServices from "../../services/auth";
 
-import global from "../../web-sh/src/config/global";;
+import global from "../../config/global";
 
 const { SecurityKey, Passkey } = formsComponents;
 

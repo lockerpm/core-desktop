@@ -26,15 +26,13 @@ import userServices from "../../services/user";
 import authServices from "../../services/auth";
 import commonServices from "../../services/common";
 
-import global from "../../web-sh/src/config/global";
+import global from "../../config/global";
 import common from "../../utils/common";
 
-const { SecurityKey } = formsComponents;
-const { Enable2FA } = authComponents;
-
-const { WelcomeImg } = images;
-
 const Setup2FA = () => {
+  const { SecurityKey } = formsComponents;
+  const { Enable2FA } = authComponents;
+  const { WelcomeImg } = images;
   const { t } = useTranslation();
   const location = useLocation();
   const currentPage = common.getRouterByLocation(location)

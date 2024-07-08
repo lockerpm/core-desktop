@@ -27,7 +27,7 @@ import coreServices from "../../services/core";
 import authServices from "../../services/auth";
 import commonServices from "../../services/common";
 
-import global from "../../web-sh/src/config/global";
+import global from "../../config/global";
 import common from "../../utils/common";
 import jsCore from "../../web-sh/src/core-js"
 

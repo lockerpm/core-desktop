@@ -28,7 +28,7 @@ import images from "../../assets/images";
 import commonServices from "../../services/common";
 import authServices from "../../services/auth";
 
-import global from "../../web-sh/src/config/global";
+import global from "../../config/global";
 import common from "../../utils/common";
 
 const { SecurityKey } = formsComponents;
@@ -57,7 +57,7 @@ const Lock = () => {
   const query = common.convertStringToQuery(location.search);
 
   useEffect(() => {
-    commonServices.fetch_user_info();
+    common.fetchUserInfo();
   }, [])
 
   useEffect(() => {

@@ -13,7 +13,7 @@ import {
 
 import { } from '@ant-design/colors';
 
-import global from "../../web-sh/src/config/global";
+import global from "../../config/global";
 
 const PairingForm = (props) => {
   const { t } = useTranslation()

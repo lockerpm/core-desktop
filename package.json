@@ -6,7 +6,7 @@
   "description": "Locker PM Desktop",
   "dependencies": {
     "@lockerpm/design": "^1.0.17",
-    "@lockerpm/desktop-service": "^1.0.4",
+    "@lockerpm/desktop-service": "^1.1.2",
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.5.0",
     "apexcharts": "^3.44.2",
@@ -64,7 +64,7 @@
     "release:mas": "yarn gen-cert && craco build && electron-builder -c ./build-config/electron-builder.macos.mas.js -p always",
     "release:win-64": "setx CI false && craco build && electron-builder -c ./build-config/electron-builder.windows.js -p always",
     "sub:init": "git submodule update --force --recursive --init --remote",
-    "sub:pull": "git submodule foreach git pull --recurse-submodules origin main",
+    "sub:pull": "git submodule foreach git pull --recurse-submodules origin dev",
     "sub:update": "git submodule update --remote",
     "gen-cert": "sh macos-config/cert_gen.sh"
   },
