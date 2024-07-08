@@ -54,8 +54,8 @@
     "release": "CI=false craco build && electron-builder --publish=always",
     "release:mac": "yarn gen-cert && craco build && electron-builder -c ./build-config/electron-builder.macos.json",
     "release:win-64": "setx CI false && craco build && electron-builder -c ./build-config/electron-builder.windows.json",
-    "sub:init": "git submodule update --init --recursive",
-    "sub:pull": "git submodule foreach git pull origin dev",
+    "sub:init": "git submodule update --force --recursive --init --remote",
+    "sub:pull": "git submodule foreach git pull --recurse-submodules origin main",
     "sub:update": "git submodule update --remote",
     "gen-cert": "sh macos-config/cert_gen.sh"
   },
