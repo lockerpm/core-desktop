@@ -19,9 +19,8 @@ import authServices from "../../../services/auth";
 
 import common from "../../../utils/common";
 
-const { SignInForm } = authFormsComponents;
-
 const Enterprise = (props) => {
+  const { SignInForm } = authFormsComponents;
   const {
     loading,
     onSubmit = () => { }

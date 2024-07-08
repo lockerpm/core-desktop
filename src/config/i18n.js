@@ -1,7 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import systemServices from "../web-sh/src/services/system";
-
 import locale from '../locale/index';
 
 const resources = {
@@ -11,12 +9,15 @@ const resources = {
   vi: {
     translation: locale.vi,
   },
+  zh: {
+    translation: locale.zh,
+  },
 };
 
 i18n.use(initReactI18next)
   .init({
     resources,
-    lng: systemServices.get_language(),
+    lng: 'en',
     interpolation: {
       escapeValue: false,
     },

@@ -31,15 +31,11 @@ import global from "../../web-sh/src/config/global";
 import common from "../../utils/common";
 import jsCore from "../../web-sh/src/core-js"
 
-import '../../web-sh/src/pages/auth/css/auth.scss';
-
-const { ChangePassword, SecurityKey } = formsComponents;
-const { EnterOtp } = authComponents;
-
-const { WelcomeImg } = images;
 const Authenticate = () => {
-
+  const { ChangePassword, SecurityKey } = formsComponents;
+  const { EnterOtp } = authComponents;
   const { t } = useTranslation();
+  const { WelcomeImg } = images;
   const location = useLocation();
 
   const currentPage = common.getRouterByLocation(location)

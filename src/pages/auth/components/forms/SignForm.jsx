@@ -22,9 +22,8 @@ import authServices from "../../../../services/auth";
 import global from "../../../../web-sh/src/config/global";
 import common from "../../../../utils/common";
 
-const { SecurityKey } = formsComponents;
-
 const SignInForm = (props) => {
+  const { SecurityKey } = formsComponents;
   const {
     loading,
     step = 1,

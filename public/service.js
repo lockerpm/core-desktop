@@ -7,7 +7,7 @@ const constants = require('./constants.json')
 
 isDev && require('dotenv').config()
 
-const { DesktopService } = require('locker-desktop-service')
+const { DesktopService } = require('@lockerpm/desktop-service')
 
 class MockStorageService {
   storage
@@ -29,32 +29,34 @@ class MockStorageService {
   }
 }
 
-const rootCert = (() => {
+const getCert = (name) => {
   const platform = os.platform()
-  let devPath = '../service/cert/ca-cert.pem'
-  let prodPath = '../cert/ca-cert.pem'
-  if (platform === 'darwin') {
-    devPath = '../cert/ca-cert.pem'
-    prodPath = './cert/ca-cert.pem'
+  let devPath = '../service/cert/'
+  let prodPath = '../cert/'
+  if (['darwin', 'linux'].includes(platform)) {
+    devPath = '../cert/'
+    prodPath = './cert/'
   }
   if (isDev) {
-    return fs.readFileSync(path.join(__dirname, devPath))
+    return fs.readFileSync(path.join(__dirname, devPath + name))
   } else {
-    return fs.readFileSync(path.resolve(process.resourcesPath, prodPath))
+    return fs.readFileSync(path.resolve(process.resourcesPath, prodPath + name))
   }
-})()
-
+}
 
 const storageService = new MockStorageService()
 const service = new DesktopService({
   baseApiUrl: `${process.env.REACT_APP_API_URL || constants.REACT_APP_API_URL}/v3`,
   storageService,
   ssl: {
-    rootCert: rootCert,
+    rootCert: getCert('ca-cert.pem'),
+  },
+  socketSsl: {
+    cert: getCert('server-cert.pem'),
+    key: getCert('server-key.pem'),
   },
   logLevel: 1,
   unsafe: true,
-  servicePorts: [14411, 14110, 15611, 14412, 16311, 14514, 14515, 14413, 16310],
   apiHeaders: {
     'CF-Access-Client-Id': process.env.REACT_APP_CF_ACCESS_CLIENT_ID || constants.REACT_APP_CF_ACCESS_CLIENT_ID,
     'CF-Access-Client-Secret': process.env.REACT_APP_CF_ACCESS_CLIENT_SECRET || constants.REACT_APP_CF_ACCESS_CLIENT_SECRET,

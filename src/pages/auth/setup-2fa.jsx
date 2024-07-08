@@ -29,8 +29,6 @@ import commonServices from "../../services/common";
 import global from "../../web-sh/src/config/global";
 import common from "../../utils/common";
 
-import '../../web-sh/src/pages/auth/css/auth.scss';
-
 const { SecurityKey } = formsComponents;
 const { Enable2FA } = authComponents;
 

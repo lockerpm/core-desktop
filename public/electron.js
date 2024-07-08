@@ -1,4 +1,8 @@
 const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { autoUpdater } = require('electron-updater');
+
+autoUpdater.autoDownload = false;
+
 const path = require('node:path');
 const isDev = require('electron-is-dev');
 const url = require('url');
@@ -6,11 +10,10 @@ const url = require('url');
 const { service } = require(path.join(__dirname, './service.js'));
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
-
 if (process.platform === 'win32' && process.argv.length >= 2) {
-  app.setAsDefaultProtocolClient('locker-app', process.execPath, [path.resolve(process.argv[1])])
+  app.setAsDefaultProtocolClient('lockerApp', process.execPath, [path.resolve(process.argv[1])])
 } else {
-  app.setAsDefaultProtocolClient('locker-app')
+  app.setAsDefaultProtocolClient('lockerApp')
 }
 
 let mainWindow;
@@ -28,7 +31,7 @@ function createWindow() {
 
   const startUrl = isDev ? 'https://demo.locker.io:3000' : url.format({
     pathname: path.join(__dirname, '../build/index.html'),
-    hash: '/add',
+    hash: '/',
     protocol: 'file:',
     slashes: true,
   });
@@ -46,6 +49,9 @@ function createWindow() {
   service.on('fidoRequestFingerprint', () => {
     mainWindow.webContents.send('event', 'fidoRequestFingerprint')
   })
+  service.on('fidoTouchSuccess', () => {
+    mainWindow.webContents.send('event', 'fidoTouchSuccess')
+  })
   service.on('fidoRequestTouch', () => {
     mainWindow.webContents.send('event', 'fidoRequestTouch')
   })
@@ -62,9 +68,8 @@ function createWindow() {
     mainWindow.webContents.send('event', 'userLogout', data)
   })
   service.on('customMessageReceived', (data) => {
-    mainWindow.webContents.send('event', 'customMessageReceived', data)
+    mainWindow.webContents.send('event', 'customMessageReceived', data);
   })
-
   mainWindow.on('close', function () {
     mainWindow = null;
   })
@@ -74,7 +79,9 @@ const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
   app.quit()
 } else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
+  app.on('second-instance', async (event, commandLine, workingDirectory) => {
+    const deepLinkUrl = commandLine.find(arg => arg.startsWith('lockerapp://'));
+    await sendDataAfterOpenFromBrowser(deepLinkUrl)
     if (mainWindow.browserWindow) {
       if (mainWindow.browserWindow.isMinimized()) {
         mainWindow.browserWindow.restore()
@@ -98,9 +105,14 @@ app.on('activate', function () {
   }
 })
 
-app.on('open-url', (event, url) => {
-  // Handle open app from url in MacOS
-  // Currently do nothing
+app.on('open-url', async (event, url) => {
+  await sendDataAfterOpenFromBrowser(url)
+  if (mainWindow.browserWindow) {
+    if (mainWindow.browserWindow.isMinimized()) {
+      mainWindow.browserWindow.restore()
+    }
+    mainWindow.browserWindow.focus()
+  }
 })
 
 app.whenReady().then(() => {
@@ -121,7 +133,6 @@ app.whenReady().then(() => {
       }
     }
   }
-
   ipcMain.handle('setApiToken', (event, token) => {
     return service.setApiToken(token)
   })
@@ -187,4 +198,59 @@ app.whenReady().then(() => {
   ipcMain.handle('openShellUrl', (__, url) => {
     shell.openExternal(url)
   })
+  ipcMain.handle('getAppVersion', (__) => {
+    mainWindow.webContents.send('event', 'appVersion', app.getVersion())
+  })
+  ipcMain.handle('getIsDev', (__) => {
+    mainWindow.webContents.send('event', 'isDev', isDev)
+  })
+  ipcMain.handle('doUpdateInApp', async () => {
+    autoUpdater.autoDownload = true
+    autoUpdater.checkForUpdates()
+  })
+  ipcMain.handle('quitAndInstallInApp', async () => {
+    autoUpdater.quitAndInstall(false, false)
+  })
+
+  // auto update event
+  autoUpdater.on('update-available', info => {
+    mainWindow.webContents.send('event', 'updateAvailable', info)
+  })
+  autoUpdater.on('error', err => {
+    mainWindow.webContents.send('event', 'updateError', err)
+  })
+
+  autoUpdater.on('download-progress', progressObj => {
+    mainWindow.webContents.send('event', 'downloadProgress', progressObj)
+  })
+
+  autoUpdater.on('update-downloaded', info => {
+    mainWindow.webContents.send('event', 'updateDownloaded', info)
+  })
+  
 })
+
+async function sendDataAfterOpenFromBrowser (deepLinkUrl = '') {
+  if (!deepLinkUrl) {
+    return
+  }
+  while (mainWindow?.browserWindow === null) {
+    await delay(1000)
+  }
+
+  const urlPart = deepLinkUrl.replace(/lockerApp:\/\/auth\/\?|lockerApp:\/\/auth\?/g, '').split('&')
+  if (urlPart.length > 0) {
+    const params = {}
+    for (let i = 0; i < urlPart.length; i++) {
+      const arr = urlPart[i].split('=')
+      params[arr[0]] = arr[1]
+    }
+    const allWindows = BrowserWindow.getAllWindows();
+    mainWindow.webContents.send('event', 'customMessageReceived', params)
+    allWindows.forEach(win => {
+      if (win.id != mainWindow.id) {
+        win.close();
+      }
+    });
+  }
+}

@@ -23,8 +23,12 @@ contextBridge.exposeInMainWorld('service', {
   deleteBackupPasswordless: (id) => unwrapMethod(ipcRenderer.invoke('deleteBackupPasswordless', id)),
   listBackupPasswordless: () => unwrapMethod(ipcRenderer.invoke('listBackupPasswordless')),
   setBackupPasswordless: (params) => unwrapMethod(ipcRenderer.invoke('setBackupPasswordless', params)),
-
+  
   openShellUrl: url => ipcRenderer.invoke('openShellUrl', url),
+  getAppVersion: () => ipcRenderer.invoke('getAppVersion'),
+  getIsDev: () => ipcRenderer.invoke('getIsDev'),
+  doUpdateInApp: () => ipcRenderer.invoke('doUpdateInApp'),
+  quitAndInstallInApp: () => ipcRenderer.invoke('quitAndInstallInApp'),
   onEvent: (callback) => ipcRenderer.on('event', callback),
 })
 

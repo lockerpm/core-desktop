@@ -6,11 +6,11 @@ import modalsComponents from '../modals'
 import authServices from '../../services/auth'
 import storeActions from '../../store/actions'
 
-import global from '../../web-sh/src/config/global'
-
-const { PairingConfirmModal } = modalsComponents;
+import global from '../../config/global'
+import common from '../../utils/common'
 
 function DesktopService() {
+  const { PairingConfirmModal } = modalsComponents;
   const userInfo = useSelector((state) => state.auth.userInfo);
   const signInReload = useSelector((state) => state.auth.signInReload);
 
@@ -35,6 +35,7 @@ function DesktopService() {
   }
 
   service.onEvent(async (e, event, data) => {
+    console.log(event);
     switch (event) {
       case 'serviceReady':
         global.store.dispatch(storeActions.updateIsConnected(true));
@@ -54,8 +55,12 @@ function DesktopService() {
       case 'fidoRequestFingerprint':
         global.store.dispatch(storeActions.updateIsFingerprint(true));
         break;
+      case 'fidoTouchSuccess':
       case 'customMessageReceived':
-        if (data.signInReload) {
+        if (data.token) {
+          common.updateAccessToken(data.token);
+          global.navigate(global.keys.LOCK);
+        } else if (data.signInReload) {
           global.store.dispatch(storeActions.updateSignInReload(!signInReload));
         }
         break;

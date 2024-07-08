@@ -1,4 +1,5 @@
 import common from "../web-sh/src/services/common";
+import coreServices from "./core";
 
 async function reset_service() {
   await service.resetGRPC();

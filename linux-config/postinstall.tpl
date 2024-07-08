@@ -1,16 +1,34 @@
 #!/bin/bash
 
-app_name="Locker Password Manager"
+app_name='${sanitizedProductName}'
 service_alias=""
 
-if [ -z "$1" ]; then
-    echo "Error: Full path not provided."
-    exit 1
+# --------------- DEFAULT ELECTRON-BUILD SCRIPTS ---------------
+
+if type update-alternatives 2>/dev/null >&1; then
+    # Remove previous link if it doesn't use update-alternatives
+    if [ -L '/usr/bin/${executable}' -a -e '/usr/bin/${executable}' -a "`readlink '/usr/bin/${executable}'`" != '/etc/alternatives/${executable}' ]; then
+        rm -f '/usr/bin/${executable}'
+    fi
+    update-alternatives --install '/usr/bin/${executable}' '${executable}' '/opt/${sanitizedProductName}/${executable}' 100 || ln -sf '/opt/${sanitizedProductName}/${executable}' '/usr/bin/${executable}'
+else
+    ln -sf '/opt/${sanitizedProductName}/${executable}' '/usr/bin/${executable}'
 fi
 
-full_path="$1"
-base_path=$(dirname "$full_path")
-output_file="$base_path/post-log.txt"
+# SUID chrome-sandbox for Electron 5+
+chmod 4755 '/opt/${sanitizedProductName}/chrome-sandbox' || true
+
+if hash update-mime-database 2>/dev/null; then
+    update-mime-database /usr/share/mime || true
+fi
+
+if hash update-desktop-database 2>/dev/null; then
+    update-desktop-database /usr/share/applications || true
+fi
+
+# --------------- OUR SCRIPTS ---------------
+
+output_file="/tmp/locker-postinstall-log.txt"
 
 if [ -e "$output_file" ]; then
     rm "$output_file"
@@ -21,17 +39,13 @@ echo "Current time: $(date +"%T")" > "$output_file"
 
 # Current folder
 pwd >> "$output_file"
+echo "Param 0: $0" >> "$output_file"
+echo "Param 1: $1" >> "$output_file"
 
 echo "Installer version 0.1.0" >> "$output_file"
 echo "App name: $app_name" >> "$output_file"
 
-# Full path to the pkg
-echo "Run pkg from: $1" >> "$output_file"
-
-# Full path to the installation destination. For example: /Applications
-echo "Installation destination: $2" >> "$output_file"
-
-app_resources_path="/Applications/$app_name.app/Contents/Resources"
+app_resources_path="/opt/$app_name/resources"
 binary_path="$app_resources_path/locker-service"
 cert_path="$app_resources_path/cert"
 
@@ -68,14 +82,10 @@ openssl x509 -req -in server-req.pem -days 36500 -CA ca-cert.pem -CAkey ca-key.p
 echo "Server's signed certificate" >> "$output_file"
 openssl x509 -in server-cert.pem -noout -text
 
-### ----------- ADD CERT TO KEYCHAIN -----------
-
-CERT_PATH="$cert_path/server-cert.pem"
-
-security add-trusted-cert -d -r trustAsRoot -p ssl -k ~/Library/Keychains/login.keychain "$CERT_PATH" >> "$output_file"
-echo "Cert added to login keychain" >> "$output_file"
-
-### ----------- INSTALL SERVICE -----------
+# Change ownership back to current user
+chown $SUDO_USER ca-cert.pem
+chown $SUDO_USER server-cert.pem
+chown $SUDO_USER server-key.pem
 
 # List of ports
 ports=(14411 14110 15611 14412 16311 14514 14515 14413 14401 14100 15601 14402 16301 14504 14505 14403)
@@ -102,7 +112,7 @@ for port in "${ports[@]}"; do
     fi
 done
 
-# Check if any port responded
+# Check if any port responded -> uninstall service
 if [ "$responded" = true ]; then
     echo "Service is currently running" >> "$output_file"
     sudo "$binary_path" -service=stop
@@ -112,6 +122,7 @@ else
     echo "Service is not running" >> "$output_file"
 fi
 
+# Start service
 sudo "$binary_path" -service=install
 sudo "$binary_path" -service=start
 echo "Service is started" >> "$output_file"

@@ -1,0 +1,53 @@
+module.exports = {
+  appId: 'com.lockerpm_app',
+  extraResources: [],
+  files: ['build/**/*', 'service/**/*'],
+  win: {
+    target: 'nsis',
+  },
+  icon: 'service/icon.ico',
+  publish: null,
+  nsis: {
+    oneClick: false,
+    perMachine: true,
+    allowElevation: false,
+    allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall: true,
+    runAfterFinish: false,
+    include: 'service/installer.nsh',
+  },
+  extraFiles: [
+    {
+      from: 'service/service-config.json',
+      to: 'service-config.json',
+    },
+    {
+      from: 'service/locker-service.exe',
+      to: 'locker-service.exe',
+    },
+    {
+      from: 'service/cbor.dll',
+      to: 'cbor.dll',
+    },
+    {
+      from: 'service/crypto-50.dll',
+      to: 'crypto-50.dll',
+    },
+    {
+      from: 'service/fido2.dll',
+      to: 'fido2.dll',
+    },
+    {
+      from: 'service/zlib1.dll',
+      to: 'zlib1.dll',
+    },
+    {
+      from: 'service/cert-gen-and-service-install.ps1',
+      to: 'cert-gen-and-service-install.ps1',
+    },
+    {
+      from: 'service/cert-gen-and-service-uninstall.ps1',
+      to: 'cert-gen-and-service-uninstall.ps1',
+    },
+  ],
+}

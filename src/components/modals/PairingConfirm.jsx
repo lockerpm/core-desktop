@@ -1,12 +1,11 @@
 import React, { } from "react";
+import { } from 'react-redux';
+import { useTranslation } from "react-i18next";
+
 import {
   Modal,
 } from '@lockerpm/design';
 
-import { } from 'react-redux';
-import { } from '@ant-design/colors';
-
-import { useTranslation } from "react-i18next";
 import { } from "@ant-design/icons";
 
 import formsComponents from "../forms";

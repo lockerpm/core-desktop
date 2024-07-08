@@ -57,7 +57,7 @@ const PasswordConfirmModal = (props) => {
       if (!!storedKeyHash && !!keyHash && storedKeyHash == keyHash) {
         onConfirm(password);
       } else {
-        authServices.logout();
+        global.pushError({ message: t('validation.invalid', { name: t('common.password') }) })
       }
       setChecking(false);
     })
@@ -81,14 +81,16 @@ const PasswordConfirmModal = (props) => {
       okText={okText}
       onOk={() => handleConfirm()}
       onCancel={() => onClose()}
-      footer={userInfo?.login_method === 'password' && !isPair ? undefined : false}
+      footer={userInfo?.login_method === 'password' ? undefined : false}
       okButtonProps={{
         loading: checking || callingAPI,
         disabled: !password,
-        danger: danger
+        danger: danger,
+        size: "large"
       }}
       cancelButtonProps={{
-        disabled: checking || callingAPI
+        disabled: checking || callingAPI,
+        size: "large"
       }}
     >
       <div key={timeNow}>
@@ -120,16 +122,17 @@ const PasswordConfirmModal = (props) => {
           {
             unlockMethod === 'security_key' && <div>
               <SecurityKey
+                isLogin={true}
                 changing={callingAPI}
                 userInfo={userInfo}
                 onConfirm={onConfirm}
-                onRepair={() => setIsPair(true)}
               />
             </div>
           }
           {
             unlockMethod === 'passkey' && <div>
               <Passkey
+                isLogin={true}
                 changing={callingAPI}
                 userInfo={userInfo}
                 onConfirm={onConfirm}
